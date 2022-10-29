@@ -1,0 +1,33 @@
+{
+  "name": "vite-csm",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "lint": "npm run eslint:fix && npm run stylelint:fix",
+    "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
+    "lint-fix": "eslint --fix --ext .js --ext .vue src/"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^0.2.4",
+    "@vitejs/plugin-vue-jsx": "^2.0.0",
+    "axios": "^0.21.1",
+    "dayjs": "^1.10.7",
+    "element-plus": "1.1.0-beta.7",
+    "vue": "^3.2.37",
+    "vue-router": "^4.0.0-0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.0.0",
+    "eslint": "^8.19.0",
+    "eslint-plugin-vue": "^9.2.0",
+    "sass": "^1.53.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.0.0",
+    "vite-plugin-hot-export": "^0.5.2",
+    "vue-tsc": "^0.38.4"
+  }
+}
