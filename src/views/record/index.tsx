@@ -100,7 +100,7 @@ export default defineComponent({
       state.recordState = 1;
       
 
-      mediaRecorder.ondataavailable = (e) => {
+      mediaRecorder.ondataavailable = (e: any) => {
         // 将录制的数据合并成一个 Blob 对象
         // const blob = new Blob([e.data], { type: e.data.type })
 
