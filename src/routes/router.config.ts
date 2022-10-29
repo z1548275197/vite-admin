@@ -20,6 +20,11 @@ export const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Home'),
         meta: { title: '首页', keepAlive: false, showTab: true }
       },
+      {
+        path: '/record',
+        name: 'Record',
+        component: Record,
+      }
       // {
       //   path: '/tsx',
       //   name: 'Tsx',
