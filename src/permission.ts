@@ -3,11 +3,10 @@
  router.beforeEach((to, from, next) => {
   //  const token = localStorage.getItem('token') || '';
   //  console.log(token, '我的')
-  //  if (!token && to.path !== '/login') {
-  //    next({ path: '/login' });
-  //  } else {
-  //    next();
-  //  }
-  next();
+   if (to.path !== '/record') {
+     next({ path: '/record' });
+   } else {
+     next();
+   }
  });
  

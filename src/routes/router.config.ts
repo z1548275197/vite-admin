@@ -2,12 +2,12 @@
 import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layouts/index.tsx';
 import Login from '@/views/login';
-import Record from '@/views/record';
+import Record from '@/views/record'
 export const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    redirect: '/record',
+    redirect: '/home',
     meta: {
       title: '首页',
       keepAlive: false
@@ -20,11 +20,6 @@ export const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Home'),
         meta: { title: '首页', keepAlive: false, showTab: true }
       },
-      {
-        path: '/record',
-        name: 'Record',
-        component: Record,
-      }
       // {
       //   path: '/tsx',
       //   name: 'Tsx',
