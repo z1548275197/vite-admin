@@ -22,6 +22,7 @@ export default defineComponent({
     })
 
     const submit = () => {
+      localStorage.setItem('token', '123456')
       router.push('/record');
       // state.btnLoading = true;
       // ruleFormRef.value.validate( async (valid: any) => {
