@@ -22,21 +22,22 @@ export default defineComponent({
     })
 
     const submit = () => {
-      state.btnLoading = true;
-      ruleFormRef.value.validate( async (valid: any) => {
-        if (valid) {
-          const res: any = await login(state.loginForm)
-          if (res.code === 1) {
-            localStorage.setItem('authInfo', JSON.stringify(res.data))
-            localStorage.setItem('token', JSON.stringify(res.data.authKey))
-            router.push('/');
-          }
-          console.log(res);
-        } else {
-          console.log('出错了')
-        }
-        state.btnLoading = false;
-      })
+      router.push('/record');
+      // state.btnLoading = true;
+      // ruleFormRef.value.validate( async (valid: any) => {
+      //   if (valid) {
+      //     const res: any = await login(state.loginForm)
+      //     if (res.code === 1) {
+      //       localStorage.setItem('authInfo', JSON.stringify(res.data))
+      //       localStorage.setItem('token', JSON.stringify(res.data.authKey))
+      //       router.push('/');
+      //     }
+      //     console.log(res);
+      //   } else {
+      //     console.log('出错了')
+      //   }
+      //   state.btnLoading = false;
+      // })
     }
 
     onMounted(() => {
