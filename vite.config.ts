@@ -3,8 +3,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import vue from '@vitejs/plugin-vue'
 import path, { resolve } from 'path';
 import { fileURLToPath } from 'url'
-
-
+import viteCompression from 'vite-plugin-compression';
 
 // 全局 scss 文件的路径
 // 用 normalizePath 解决 window 下的路径问题
@@ -15,6 +14,7 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
+    viteCompression(),
   ],
   resolve: {
     alias: [{ find: '@', replacement: resolve(__dirname, 'src') }],

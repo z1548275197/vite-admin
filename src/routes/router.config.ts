@@ -19,5 +19,10 @@ export const routes: Array<RouteRecordRaw> = [
     name: 'Contract',
     component: () => import('@/views/contract'),
   },
+  {
+    path: '/editContract',
+    name: 'EditContract',
+    component: () => import('@/views/EditContract'),
+  },
 ]
 
