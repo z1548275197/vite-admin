@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "lint": "npm run eslint:fix && npm run stylelint:fix",
     "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
-    "lint-fix": "eslint --fix --ext .js --ext .vue src/"
+    "lint-fix": "eslint --fix --ext .js --ext .vue src/",
+    "newbranch": "f2e git newbranch"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^0.2.7",
