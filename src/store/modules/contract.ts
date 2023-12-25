@@ -6,6 +6,7 @@ interface PageItem {
 interface MaterialItem {
   type: Number;
   name: String;
+  icon: String;
 }
 
 interface State {
@@ -17,7 +18,28 @@ interface State {
 
 const state: State = {
   pageList: [],             // 页面数据
-  materialList: [],         // 素材工具栏列表
+  materialList: [
+    {
+      type: 1,
+      name: '单行文本',
+      icon: 'https://fr-static.jiazhengye.cn/danhangwenben.67065f09d47bf6c3.png'
+    },
+    {
+      type: 2,
+      name: '多行文本',
+      icon: 'https://fr-static.jiazhengye.cn/rili.59af711857f188c9.png'
+    },
+    {
+      type: 3,
+      name: '复选框',
+      icon: 'https://fr-static.jiazhengye.cn/fuxuankuang.58a02d57f1c28f89.png'
+    },
+    {
+      type: 4,
+      name: '填写日期',
+      icon: 'https://fr-static.jiazhengye.cn/duohangwenben.6dd1111a4371f793.png'
+    },
+  ],         // 素材工具栏列表
   currentPageIndex: 0,      // 当前选择的页面索引
   currentComponentIndex: -1 // 当前选择的组件索引
 };

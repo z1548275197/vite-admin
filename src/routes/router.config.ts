@@ -5,7 +5,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    redirect: '/home',
+    redirect: '/contract',
     meta: {
       title: '首页',
       keepAlive: false

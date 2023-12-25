@@ -227,19 +227,26 @@ export default defineComponent({
                       <div class={[classes.leftBottomPoint, classes.point]} onMousedown={(e: any) => startResize(e, index, 'leftBottom')}></div>
                     )
                   }
-
-                  <div class={[classes.rightBottomPoint, classes.point]} onMousedown={(e: any) => startResize(e, index, 'rightBottom')}></div>
-                  <el-icon
-                    class={classes.rightTopPoint}
-                    onMousedown={(e: any) => {
-                      e.stopPropagation();
-                      e.preventDefault()
-                    }}
-                    size={16}
-                    onClick={() => {
-                      deleteComponent(index);
-                    }}
-                  ><CircleCloseFilled /></el-icon>
+                  {
+                    index === currentComponentIndex.value && (
+                      <div class={[classes.rightBottomPoint, classes.point]} onMousedown={(e: any) => startResize(e, index, 'rightBottom')}></div>
+                    )
+                  }
+                  {
+                    index === currentComponentIndex.value && (
+                      <el-icon
+                        class={classes.rightTopPoint}
+                        onMousedown={(e: any) => {
+                          e.stopPropagation();
+                          e.preventDefault()
+                        }}
+                        size={16}
+                        onClick={() => {
+                          deleteComponent(index);
+                        }}
+                      ><CircleCloseFilled /></el-icon>
+                    )
+                  }
                   {item.value}
                 </div>
               }

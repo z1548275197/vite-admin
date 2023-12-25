@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, reactive, ref } from 'vue';
+import { defineComponent, onMounted, reactive, ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import classes from './index.module.scss';
 import { jsPDF } from 'jspdf';
@@ -7,15 +7,7 @@ import html2canvas from 'html2canvas';
 export default defineComponent({
   setup() {
     const store = useStore();
-
-    const state: any = reactive({
-      toolList: [
-        {
-          type: 1,
-          name: '文本'
-        }
-      ],
-    });
+    const materialList = computed(() => store.state.contract.materialList);
 
     // 开始拖拽工具栏组件事件
     const startDragUtil = (event: any, item: any) => {
@@ -60,9 +52,14 @@ export default defineComponent({
       return (
         <div class={classes.typeList}>
           {
-            state.toolList.map((item: any) => {
+            materialList.value.map((item: any) => {
               return (
-                <div class={classes.typeBox} draggable ondragstart={(event: any) => startDragUtil(event, item)}>
+                <div
+                  key={item.type}
+                  class={classes.typeBox}
+                  draggable
+                  ondragstart={(event: any) => startDragUtil(event, item)}
+                >
                   <div class={classes.typeName}>{item.name}</div>
                 </div>
               )
