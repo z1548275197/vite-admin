@@ -2,6 +2,7 @@ import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import classes from './index.module.scss';
 import { cloneDeep } from 'lodash';
+import { CircleCloseFilled } from '@element-plus/icons-vue';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -216,20 +217,29 @@ export default defineComponent({
                     startDragComponent(e, item);
                   }}
                 >
-                  <div class={[classes.leftTopPoint, classes.point]} onMousedown={(e: any) => startResize(e, index, 'leftTop')}></div>
-                  <div class={[classes.leftBottomPoint, classes.point]} onMousedown={(e: any) => startResize(e, index, 'leftBottom')}></div>
-                  <div class={[classes.rightBottomPoint, classes.point]} onMousedown={(e: any) => startResize(e, index, 'rightBottom')}></div>
+                  {
+                    index === currentComponentIndex.value && (
+                      <div class={[classes.leftTopPoint, classes.point]} onMousedown={(e: any) => startResize(e, index, 'leftTop')}></div>
+                    )
+                  }
+                  {
+                    index === currentComponentIndex.value && (
+                      <div class={[classes.leftBottomPoint, classes.point]} onMousedown={(e: any) => startResize(e, index, 'leftBottom')}></div>
+                    )
+                  }
 
-                  <div
-                    class={[classes.rightTopPoint, classes.point]}
+                  <div class={[classes.rightBottomPoint, classes.point]} onMousedown={(e: any) => startResize(e, index, 'rightBottom')}></div>
+                  <el-icon
+                    class={classes.rightTopPoint}
                     onMousedown={(e: any) => {
                       e.stopPropagation();
                       e.preventDefault()
                     }}
+                    size={16}
                     onClick={() => {
                       deleteComponent(index);
                     }}
-                  ></div>
+                  ><CircleCloseFilled /></el-icon>
                   {item.value}
                 </div>
               }

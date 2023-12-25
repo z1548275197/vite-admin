@@ -17,7 +17,7 @@
   .dragItem {
     width: 120px;
     height: 30px;
-    border: 1px solid #e9e9e9;
+    border: 1px dashed #2e73f5;
     position: absolute;
     cursor: pointer;
     z-index: 10;
@@ -27,40 +27,40 @@
     line-height: 12px;
 
     &.active {
-      border: 1px dashed #18c37e;
+      border: 1px solid #2e73f5;
     }
 
     .point {
       width: 6px;
       height: 6px;
-      background-color: red;
+      background-color: #2e73f5;
     }
 
     .leftTopPoint {
       position: absolute;
-      left: 0;
-      top: 0;
+      left: -2px;
+      top: -2px;
       cursor: nw-resize;
     }
 
     .rightTopPoint {
       position: absolute;
-      right: 0;
-      top: 0;
-      background-color: #18c37e;
+      right: -6px;
+      top: -6px;
+      color: red;
     }
 
     .leftBottomPoint {
       position: absolute;
-      left: 0;
-      bottom: 0;
+      left: -2px;
+      bottom: -2px;
       cursor: sw-resize;
     }
 
     .rightBottomPoint {
       position: absolute;
-      right: 0;
-      bottom: 0;
+      right: -2px;
+      bottom: -2px;
       cursor: se-resize;
     }
   }
