@@ -3,6 +3,7 @@
     "target": "esnext",
     "useDefineForClassFields": true,
     "module": "esnext",
+    "types": ["three"],
     "moduleResolution": "node",
     "strict": true,
     "importHelpers": true,

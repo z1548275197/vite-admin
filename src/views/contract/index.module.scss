@@ -1,0 +1,110 @@
+.container {
+  height: 100vh;
+
+  .header {
+    border-bottom: 1px solid #e9e9e9;
+    height: 100px;
+
+    .typeList {
+      display: flex;
+      align-items: center;
+      height: 100%;
+
+      .typeBox {
+        width: 60px;
+        height: 60px;
+        background-color: #e9e9e9;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: grab;
+      }
+    }
+  }
+
+  .leftAside {
+    border-right: 1px solid #e9e9e9;
+    height: calc(100vh - 101px);
+  }
+
+  .main {
+    background: #f1f1f1;
+
+    overflow-y: auto;
+    height: calc(100vh - 101px);
+    text-align: center;
+
+    .canvasContent {
+      background-color: #fff;
+      min-width: 800px;
+      width: 800px;
+      height: 1131.33px;
+      position: relative;
+      margin: 0 auto;
+      overflow: hidden;
+
+      .backUrl {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .dragItem {
+        width: 120px;
+        height: 30px;
+        border: 1px solid #e9e9e9;
+        position: absolute;
+        cursor: pointer;
+        z-index: 10;
+        background: #f6f6f6;
+        text-align: left;
+        font-size: 12px;
+        line-height: 12px;
+
+        &.active {
+          border: 1px dashed #18c37e;
+        }
+
+        .point {
+          width: 6px;
+          height: 6px;
+          background-color: red;
+        }
+
+        .leftTopPoint {
+          position: absolute;
+          left: 0;
+          top: 0;
+          cursor: nw-resize;
+        }
+
+        .rightTopPoint {
+          position: absolute;
+          right: 0;
+          top: 0;
+          cursor: ne-resize;
+        }
+
+        .leftBottomPoint {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          cursor: w-resize;
+        }
+
+        .rightBottomPoint {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          cursor: e-resize;
+        }
+      }
+    }
+  }
+
+  .rightAside {
+    border-left: 1px solid #e9e9e9;
+    height: calc(100vh - 101px);
+  }
+}

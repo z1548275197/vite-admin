@@ -1,11 +1,15 @@
 {
-  "name": "vite-csm",
+  "name": "hk-mis",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "dev:test": "vite --mode test",
+    "dev:pro": "vite --mode pro",
+    "build": "vite build --mode pro",
+    "build:test": "vite build --mode test",
+    "build:dev": "vite build --mode dev",
     "preview": "vite preview",
     "lint": "npm run eslint:fix && npm run stylelint:fix",
     "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
@@ -17,16 +21,23 @@
     "axios": "^0.21.1",
     "dayjs": "^1.10.7",
     "element-plus": "1.1.0-beta.7",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
+    "querystring": "^0.2.1",
     "vue": "^3.2.37",
-    "vue-router": "^4.0.0-0"
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-0"
   },
   "devDependencies": {
+    "@types/three": "^0.156.0",
     "@vitejs/plugin-vue": "^3.0.0",
     "eslint": "^8.19.0",
     "eslint-plugin-vue": "^9.2.0",
     "sass": "^1.53.0",
     "typescript": "^4.6.4",
     "vite": "^3.0.0",
+    "husky": "^4.3.8",
+    "lint-staged": "^11.1.1",
     "vite-plugin-hot-export": "^0.5.2",
     "vue-tsc": "^0.38.4"
   }

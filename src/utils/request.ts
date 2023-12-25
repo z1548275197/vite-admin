@@ -1,20 +1,16 @@
+import router from '@/routes/index';
 import axios from 'axios';
-import { ElMessage, ElLoading } from 'element-plus';
+import { ElMessage } from 'element-plus';
+import qs from 'querystring';
 import { isObject, changeForm, getCookie } from './helper';
-import { useRouter } from 'vue-router'
 
 const apiUrl: any = import.meta.env.VITE_BASE_API;
 
-const router = useRouter();
-console.log(router, 'router');
-
-let loading: any;
 const axiosReq = axios.create({
   baseURL: apiUrl,
   timeout: 10000,
   withCredentials: false,
 });
-const token = getCookie('token');
 axiosReq.interceptors.request.use(
   (conf: any) => {
     const { baseURL, method, headers, data, url } = conf;
@@ -24,21 +20,10 @@ axiosReq.interceptors.request.use(
       headers: {
         ...headers,
         'Content-Type': 'application/x-www-form-urlencoded',
-        authKey: 'ea178d0ec27cddd56829e65fd9a9f8a7',
+        'authorization': localStorage.getItem('token') || ''
       },
     };
-    if (method === 'post') {
-      config.data = changeForm(data);
-    }
-    loading = ElLoading.service({
-      lock: true,
-      text: 'Loading',
-      background: 'rgba(0, 0, 0, 0.7)',
-    })
-    setTimeout(() => {
-      loading.close()
-    }, 2000)
-  
+    config.data = qs.stringify(data);
     return config;
   },
   (error) => Promise.reject(error)
@@ -47,25 +32,17 @@ axiosReq.interceptors.request.use(
 axiosReq.interceptors.response.use(
   (res: any) => {
     const { data, status = '', config } = res;
-    loading.close()
-  
-    if (config.url.includes('upload.qiniup')) {
-      return data;
-    }
     if (config.responseType === 'blob') return data;
     if (status === 200) {
       const { code, msg } = data;
       switch (code) {
-        case 1:
-          return data || {};
+        case 0:
+          return data.data;
         case 4: // token失效
+          console.log('到我这里')
+          localStorage.clear();
           ElMessage.error(msg);
-          localStorage.removeItem('authInfo');
-          localStorage.removeItem('token');
-          // console.log(router)
-          // router.push('/');
-          const local: any = window.location;
-          local.reload();
+          router.replace('/login')
           return Promise.reject(res);
         default:
           ElMessage.error(msg);
@@ -75,8 +52,6 @@ axiosReq.interceptors.response.use(
     return Promise.reject(data);
   },
   (error) => {
-    loading.close()
-  
     return Promise.reject(error);
   }
 );

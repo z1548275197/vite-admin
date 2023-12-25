@@ -1,0 +1,17 @@
+stages:
+  - dev
+  - test
+
+dev:
+   stage: dev
+   script:
+     - sh /data1/script/auto_deploy_front.sh dev www.bluestarm.com 16
+   only:
+     - dev
+
+test:
+   stage: test
+   script:
+     - sh /data1/script/auto_deploy_front.sh test www.bluestarm.com 16 
+   only:
+     - test
