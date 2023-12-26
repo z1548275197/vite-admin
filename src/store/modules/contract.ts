@@ -1,19 +1,10 @@
-interface PageItem {
-  componentList: any[];
-  backgroundUrl: String;
-}
-
-interface MaterialItem {
-  type: Number;
-  name: String;
-  icon: String;
-}
+import { PageItem, MaterialItem } from '../types/contract';
 
 interface State {
   pageList: PageItem[],
   materialList: MaterialItem[],
-  currentPageIndex: Number;
-  currentComponentIndex: Number;
+  currentPageIndex: number;
+  currentComponentIndex: number;
 }
 
 const state: State = {
@@ -44,10 +35,15 @@ const state: State = {
   currentComponentIndex: -1 // 当前选择的组件索引
 };
 const getters = {
-    // getLocale(state:State){
-    //     console.log('state',state)
-    //     return state.locale
-    // }
+  currentPageData(state: State) {
+    return state.pageList[state.currentPageIndex as any]
+  },
+  currentComponent(state: State, getters: any) {
+    if (getters.currentPageData && state.currentComponentIndex > -1) {
+      return getters.currentPageData.componentList[state.currentComponentIndex];
+    } 
+    return null;
+  }
 };
 
 const mutations = {

@@ -15,7 +15,7 @@
   }
 
   .dragItem {
-    width: 120px;
+    width: 150px;
     height: 30px;
     border: 1px dashed #2e73f5;
     position: absolute;
@@ -23,12 +23,26 @@
     z-index: 10;
     background: #f6f6f6;
     text-align: left;
-    font-size: 12px;
-    line-height: 12px;
+    font-size: 16px;
 
     &.active {
       border: 1px solid #2e73f5;
     }
+
+    
+
+    .singleLine {
+      height: 100%;
+      line-height: 100%;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .moreLine {
+      line-height: 1.2;
+    }
+
 
     .point {
       width: 6px;

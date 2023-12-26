@@ -50,23 +50,28 @@ export default defineComponent({
 
     return () => {
       return (
-        <div class={classes.typeList}>
-          {
-            materialList.value.map((item: any) => {
-              return (
-                <div
-                  key={item.type}
-                  class={classes.typeBox}
-                  draggable
-                  ondragstart={(event: any) => startDragUtil(event, item)}
-                >
-                  <div class={classes.typeName}>{item.name}</div>
-                </div>
-              )
-            })
-          }
-          <el-button onClick={addPdf}>生成PDF</el-button>
-          <el-button onClick={saveContract}>保存合同</el-button>
+        <div class={classes.headerContainer}>
+          <div class={classes.toolBox}>
+            {
+              materialList.value.map((item: any) => {
+                return (
+                  <div
+                    key={item.type}
+                    class={classes.toolItem}
+                    draggable
+                    onDragstart={(event: any) => startDragUtil(event, item)}
+                  >
+                    <img class={classes.toolImg} src={item.icon} alt="" draggable="false" />
+                    <div class={classes.toolName}>{item.name}</div>
+                  </div>
+                )
+              })
+            }
+          </div>
+          <div class={classes.btnBox}>
+            <el-button onClick={addPdf}>生成PDF</el-button>
+            <el-button onClick={saveContract}>保存合同</el-button>
+          </div>
         </div>
       )
     }

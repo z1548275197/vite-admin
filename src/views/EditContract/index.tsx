@@ -3,6 +3,8 @@ import { useStore } from 'vuex';
 import classes from './index.module.scss';
 import EditHeader from './components/editHeader';
 import PageContent from './components/pageContent';
+import AddedControl from './components/addedControl';
+import EditProperty from './components/editProperty';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -67,8 +69,9 @@ export default defineComponent({
                 x: 0,
                 y: 0,
                 value: '111',
-                width: 120,
+                width: 150,
                 height: 30,
+                componentName: '单行文本'
               },
               {
                 id: 'test2222',
@@ -76,8 +79,9 @@ export default defineComponent({
                 x: 0,
                 y: 1050,
                 value: '222',
-                width: 120,
+                width: 150,
                 height: 30,
+                componentName: '单行文本'
               },
               {
                 id: 'test3333',
@@ -85,8 +89,9 @@ export default defineComponent({
                 x: 750,
                 y: 800,
                 value: '333',
-                width: 120,
+                width: 150,
                 height: 30,
+                componentName: '单行文本'
               },
             ]
           },
@@ -122,10 +127,10 @@ export default defineComponent({
               }
             </el-main>
             <el-aside width="200px" class={classes.leftAside}>
-              {/* {renderLeftContent()} */}
+              <AddedControl></AddedControl>
             </el-aside>
-            <el-aside width="200px" class={classes.rightAside}>
-              {/* {state.currentComponentIndex >= 0 && renderRightContent()} */}
+            <el-aside width="250px" class={classes.rightAside}>
+              <EditProperty></EditProperty>
             </el-aside>
           </el-container>
         </el-container>

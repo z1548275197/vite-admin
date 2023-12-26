@@ -1,10 +1,44 @@
-import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
+import { computed, defineComponent, onMounted, reactive, ref, ComputedRef } from 'vue';
 import { useStore } from 'vuex';
 import classes from './index.module.scss';
+import classNames from 'classnames/bind';
 import { cloneDeep } from 'lodash';
 import { CircleCloseFilled } from '@element-plus/icons-vue';
+import { PageItem, ComponentItem } from '@/store/types/contract';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+
+const cx = classNames.bind(classes);
+
+const componentMap: any = {
+  1: {
+    value: '',
+    width: 150,
+    height: 30,
+    placeholderTxt: '请输入单行文本',
+    componentName: '单行文本'
+  },
+  2: {
+    value: '',
+    width: 150,
+    height: 60,
+    placeholderTxt: '请输入多行文本',
+    componentName: '多行文本'
+  },
+  3: {
+    value: false,
+    width: 30,
+    height: 30,
+    componentName: '复选框'
+  },
+  4: {
+    value: '',
+    width: 150,
+    height: 30,
+    timeFormatType: 'DD/MM/YYYY',
+    componentName: '填写日期'
+  }
+}
 
 export default defineComponent({
   props: {
@@ -12,7 +46,7 @@ export default defineComponent({
   },
   setup(props: any) {
     const store = useStore();
-    const pageData: any = computed(() => store.state.contract.pageList[props.pageIndex]);
+    const pageData: PageItem = computed(() => store.state.contract.pageList[props.pageIndex]).value;
     const currentComponentIndex = computed(() => store.state.contract.currentComponentIndex);
     const state: any = reactive({
 
@@ -21,18 +55,24 @@ export default defineComponent({
     // 拖拽进入画布后，增加组件
     const addComponent = (type: any, x: any, y: any) => {
       // 根据组件ID将组件添加到画布上的指定位置
-      const tempComponent = { id: new Date().getTime(), x, y, type, value: '默认值', width: 120, height: 30 };
+      const tempComponent: ComponentItem = {
+        id: new Date().getTime(),
+        x,
+        y,
+        type,
+        ...componentMap[type]
+      };
       store.dispatch('UPDATE_COMPONENT', {
         pageIndex: props.pageIndex,
         componentList: [
-          ...pageData.value.componentList,
+          ...pageData.componentList,
           tempComponent
         ]
       })
     }
 
     const deleteComponent = (index: any) => {
-      const tempList = cloneDeep(pageData.value.componentList);
+      const tempList = cloneDeep(pageData.componentList);
       tempList.splice(index, 1);
       store.dispatch('UPDATE_COMPONENT', {
         pageIndex: props.pageIndex,
@@ -42,14 +82,14 @@ export default defineComponent({
 
     // 拖拽进入画布后，改变组件坐标
     const changeComponent = (id: any, x: any, y: any) => {
-      const index = pageData.value.componentList.findIndex((item: any) => {
+      const index = pageData.componentList.findIndex((item: any) => {
         return item.id === id
       })
       store.dispatch('EDIT_COMPONENT', {
         pageIndex: props.pageIndex,
         componentIndex: index,
         component: {
-          ...pageData.value.componentList[index],
+          ...pageData.componentList[index],
           x,
           y
         }
@@ -93,33 +133,42 @@ export default defineComponent({
       );
     }
 
+
+
     const startResize = (event: any, index: any, direction: any) => {
       event.preventDefault();
       store.dispatch('EDIT_COMPONENT', {
         pageIndex: props.pageIndex,
         componentIndex: index,
         component: {
-          ...pageData.value.componentList[index],
+          ...pageData.componentList[index],
           resizing: true
         }
       });
-      window.addEventListener('mousemove', (event) => {
+
+      const resizeMousemoveHandle = (event: any) => {
         resize(event, index, direction);
-      });
-      window.addEventListener('mouseup', () => {
+      };
+      const resizeMouseupHandle = (event: any) => {
         store.dispatch('EDIT_COMPONENT', {
           pageIndex: props.pageIndex,
           componentIndex: index,
           component: {
-            ...pageData.value.componentList[index],
+            ...pageData.componentList[index],
             resizing: false
           }
         });
-      });
+        // 解绑事件处理函数
+        window.removeEventListener('mousemove', resizeMousemoveHandle);
+        window.removeEventListener('mouseup', resizeMouseupHandle);
+      }
+
+      window.addEventListener('mousemove', resizeMousemoveHandle);
+      window.addEventListener('mouseup', resizeMouseupHandle);
     };
 
     const resize = (event: any, index: any, direction: any) => {
-      const tempComponent = cloneDeep(pageData.value.componentList[index]);
+      const tempComponent = cloneDeep(pageData.componentList[index]);
       if (!tempComponent.resizing) return;
       const canvasEle: any = document.getElementById('contractCanvas' + props.pageIndex);
       const mousemoveX = event.clientX - canvasEle.getBoundingClientRect().left;
@@ -134,7 +183,7 @@ export default defineComponent({
             pageIndex: props.pageIndex,
             componentIndex: index,
             component: {
-              ...pageData.value.componentList[index],
+              ...pageData.componentList[index],
               width: tempWidth,
               height: tempHeight,
               x: mousemoveX,
@@ -152,7 +201,7 @@ export default defineComponent({
             pageIndex: props.pageIndex,
             componentIndex: index,
             component: {
-              ...pageData.value.componentList[index],
+              ...pageData.componentList[index],
               width: tempWidth,
               height: tempHeight,
               x: mousemoveX,
@@ -169,7 +218,7 @@ export default defineComponent({
             pageIndex: props.pageIndex,
             componentIndex: index,
             component: {
-              ...pageData.value.componentList[index],
+              ...pageData.componentList[index],
               width: tempWidth,
               height: tempHeight,
             }
@@ -185,72 +234,97 @@ export default defineComponent({
       })
     }
 
+    const renderComponent = (item: ComponentItem) => {
+      if (item.type === 1) {
+        return (
+          <div class={cx('singleLine')}>{item.value || item.placeholderTxt}</div>
+        )
+      }
 
-    console.log(pageData, 'pageData')
+      if (item.type === 2) {
+        return (
+          <div class={cx('moreLine')}>{item.value || item.placeholderTxt}</div>
+        )
+      }
+
+      if (item.type === 3) {
+        return (
+          <el-checkbox style={{ marginLeft: '7px', marginTop: '6px' }} model-value={item.value}></el-checkbox>
+        )
+      }
+      if (item.type === 4) {
+        return <span>{item.value || item.timeFormatType}</span>
+      }
+
+    }
 
     return () => {
       return (
         <div
           id={'contractCanvas' + props.pageIndex}
-          class={classes.canvasContent}
-          ondrop={handleDrop}
-          ondragover={handleDragOver}
+          class={cx('canvasContent')}
+          onDrop={handleDrop}
+          onDragover={handleDragOver}
           onClick={() => {
             selectComponent(-1)
           }}
         >
-          <img src={pageData.value.backgroundUrl} class={classes.backUrl} alt="" crossOrigin="anonymous" draggable="false" />
+          <img src={pageData.backgroundUrl} class={cx('backUrl')} alt="" crossorigin="anonymous" draggable="false" />
           {/* 组件列表 */}
           {
-            pageData.value.componentList.map((item: any, index: number) => {
-              if (item.type === 1) {
-                return <div
-                  id={item.id}
-                  class={index === currentComponentIndex.value ? [classes.dragItem, classes.active] : classes.dragItem}
-                  style={{ left: item.x + 'px', top: item.y + 'px', width: item.width + 'px', height: item.height + 'px' }}
-                  draggable
-                  onClick={(e: any) => {
-                    e.stopPropagation();
-                    selectComponent(index);
-                  }}
-                  ondragstart={(e: any) => {
-                    startDragComponent(e, item);
-                  }}
-                >
-                  {
-                    index === currentComponentIndex.value && (
-                      <div class={[classes.leftTopPoint, classes.point]} onMousedown={(e: any) => startResize(e, index, 'leftTop')}></div>
-                    )
-                  }
-                  {
-                    index === currentComponentIndex.value && (
-                      <div class={[classes.leftBottomPoint, classes.point]} onMousedown={(e: any) => startResize(e, index, 'leftBottom')}></div>
-                    )
-                  }
-                  {
-                    index === currentComponentIndex.value && (
-                      <div class={[classes.rightBottomPoint, classes.point]} onMousedown={(e: any) => startResize(e, index, 'rightBottom')}></div>
-                    )
-                  }
-                  {
-                    index === currentComponentIndex.value && (
-                      <el-icon
-                        class={classes.rightTopPoint}
-                        onMousedown={(e: any) => {
-                          e.stopPropagation();
-                          e.preventDefault()
-                        }}
-                        size={16}
-                        onClick={() => {
-                          deleteComponent(index);
-                        }}
-                      ><CircleCloseFilled /></el-icon>
-                    )
-                  }
-                  {item.value}
-                </div>
-              }
-              return null
+            pageData.componentList.map((item: ComponentItem, index: number) => {
+              return <div
+                id={item.id + ''}
+                class={cx('dragItem', { active: index === currentComponentIndex.value })}
+                style={{
+                  left: item.x + 'px',
+                  top: item.y + 'px',
+                  width: item.width + 'px',
+                  height: item.height + 'px',
+                  color: item.value ? '#000' : '#bebebe',
+                  fontSize: `${item.fontSize || 16}px`
+                }}
+                draggable
+                onClick={(e: any) => {
+                  e.stopPropagation();
+                  selectComponent(index);
+                }}
+                onDragstart={(e: any) => {
+                  startDragComponent(e, item);
+                }}
+              >
+                {
+                  index === currentComponentIndex.value && (
+                    <div class={cx('leftTopPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'leftTop')}></div>
+                  )
+                }
+                {
+                  index === currentComponentIndex.value && (
+                    <div class={cx('leftBottomPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'leftBottom')}></div>
+                  )
+                }
+                {
+                  index === currentComponentIndex.value && (
+                    <div class={cx('rightBottomPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'rightBottom')}></div>
+                  )
+                }
+                {
+                  index === currentComponentIndex.value && (
+                    <el-icon
+                      class={cx('rightTopPoint')}
+                      onMousedown={(e: any) => {
+                        e.stopPropagation();
+                        e.preventDefault()
+                      }}
+                      size={16}
+                      onClick={() => {
+                        deleteComponent(index);
+                      }}
+                    ><CircleCloseFilled /></el-icon>
+                  )
+                }
+                {renderComponent(item)}
+              </div>
             })
           }
         </div>
