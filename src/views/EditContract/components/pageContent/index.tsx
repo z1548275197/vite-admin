@@ -253,7 +253,9 @@ export default defineComponent({
         )
       }
       if (item.type === 4) {
-        return <span>{item.value || item.timeFormatType}</span>
+        return (
+          <div class={cx('singleLine')}>{item.value || item.timeFormatType}</div>
+        )
       }
 
     }
@@ -282,7 +284,8 @@ export default defineComponent({
                   width: item.width + 'px',
                   height: item.height + 'px',
                   color: item.value ? '#000' : '#bebebe',
-                  fontSize: `${item.fontSize || 16}px`
+                  fontSize: `${item.fontSize || 16}px`,
+                  letterSpacing: item.letterSpace + 'px'
                 }}
                 draggable
                 onClick={(e: any) => {

@@ -5,3 +5,7 @@ export const fontSizeList = [
 export const letterSpaceList = [
   2, 4, 6, 8, 10, 12, 14
 ]
+
+export const timeFormatList = [
+  'DD/MM/YYYY', 'DD', 'MM', 'YY'
+]

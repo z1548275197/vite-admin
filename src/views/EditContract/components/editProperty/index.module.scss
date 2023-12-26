@@ -14,7 +14,11 @@
       margin-bottom: 6px;
     }
     .propertyValue {
-      
+      .numInput {
+        :global(.el-input__inner) {
+          padding: 0 5px;
+        }
+      }
     }
   }
 }
