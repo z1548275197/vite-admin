@@ -5,6 +5,7 @@ interface State {
   materialList: MaterialItem[],
   currentPageIndex: number;
   currentComponentIndex: number;
+  specification: 'A3' | 'A4';
 }
 
 const state: State = {
@@ -32,7 +33,8 @@ const state: State = {
     },
   ],         // 素材工具栏列表
   currentPageIndex: 0,      // 当前选择的页面索引
-  currentComponentIndex: -1 // 当前选择的组件索引
+  currentComponentIndex: -1, // 当前选择的组件索引
+  specification: 'A4', // 纸张规格
 };
 const getters = {
   currentPageData(state: State) {
@@ -62,6 +64,9 @@ const mutations = {
     state.currentComponentIndex = paylod.componentIndex;
     state.currentPageIndex = paylod.pageIndex;
   },
+  UPDATE_SPECIFICATION(state: State, paylod: any): void {
+    state.specification = paylod.specification;
+  },
 };
 
 const actions = {
@@ -76,6 +81,9 @@ const actions = {
   },
   SELECT_COMPONENT(context:any,paylod:any): void {
     context.commit('SELECT_COMPONENT', paylod);
+  },
+  UPDATE_SPECIFICATION(context:any,paylod:any): void {
+    context.commit('UPDATE_SPECIFICATION', paylod);
   },
 };
 

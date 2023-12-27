@@ -8,11 +8,23 @@
     margin-left: 16px;
   }
   .controlItem {
-    padding-left: 32px;
-    line-height: 24px;
+    padding: 6px 32px;
+    line-height: 22px;
     cursor: pointer;
+    font-size: 12px;
     &.active {
       background-color: #f0f0f0;
+    }
+    .controlTitle {
+      display: flex;
+      align-items: center;
+      position: relative;
+      .iconImg {
+        width: 12px;
+        height: 12px;
+        position: absolute;
+        left: -16px;
+      }
     }
     .tip {
       font-size: 12px;

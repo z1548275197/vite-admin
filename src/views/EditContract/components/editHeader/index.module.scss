@@ -35,8 +35,13 @@
       }
     }
     .btnBox {
-      width: 300px;
+      width: 400px;
       text-align: right;
       // margin-left: 200px;
+      .btn {
+        line-height: 100%;
+        .btnIcon {
+        }
+      }
     }
  }

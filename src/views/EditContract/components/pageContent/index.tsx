@@ -5,8 +5,6 @@ import classNames from 'classnames/bind';
 import { cloneDeep } from 'lodash';
 import { CircleCloseFilled } from '@element-plus/icons-vue';
 import { PageItem, ComponentItem } from '@/store/types/contract';
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 
 const cx = classNames.bind(classes);
 
@@ -46,11 +44,9 @@ export default defineComponent({
   },
   setup(props: any) {
     const store = useStore();
-    const pageData: PageItem = computed(() => store.state.contract.pageList[props.pageIndex]).value;
-    const currentComponentIndex = computed(() => store.state.contract.currentComponentIndex);
-    const state: any = reactive({
-
-    });
+    const pageData: ComputedRef<PageItem> = computed(() => store.state.contract.pageList[props.pageIndex]);
+    const currentComponentIndex: ComputedRef<number> = computed(() => store.state.contract.currentComponentIndex);
+    const specification: ComputedRef<'A3' | 'A4'> = computed(() => store.state.contract.specification);
 
     // 拖拽进入画布后，增加组件
     const addComponent = (type: any, x: any, y: any) => {
@@ -65,48 +61,51 @@ export default defineComponent({
       store.dispatch('UPDATE_COMPONENT', {
         pageIndex: props.pageIndex,
         componentList: [
-          ...pageData.componentList,
+          ...pageData.value.componentList,
           tempComponent
         ]
-      })
+      });
+      selectComponent(pageData.value.componentList.length - 1)
     }
 
     const deleteComponent = (index: any) => {
-      const tempList = cloneDeep(pageData.componentList);
+      const tempList = cloneDeep(pageData.value.componentList);
       tempList.splice(index, 1);
       store.dispatch('UPDATE_COMPONENT', {
         pageIndex: props.pageIndex,
         componentList: tempList
-      })
+      });
+      selectComponent(-1)
     }
 
     // 拖拽进入画布后，改变组件坐标
     const changeComponent = (id: any, x: any, y: any) => {
-      const index = pageData.componentList.findIndex((item: any) => {
+      const index = pageData.value.componentList.findIndex((item: any) => {
         return item.id === id
-      })
+      });
       store.dispatch('EDIT_COMPONENT', {
         pageIndex: props.pageIndex,
         componentIndex: index,
         component: {
-          ...pageData.componentList[index],
+          ...pageData.value.componentList[index],
           x,
           y
         }
-      })
+      });
+      selectComponent(index);
     }
 
     // 拖拽进入画布事件 包括从工具栏拖和在画布内拖
     const handleDrop = (event: any) => {
       event.preventDefault();
-      event.stopPropagation()
+      event.stopPropagation();
       const { type, id, point_box_x = 0, point_box_y = 0, pagePointIndex } = JSON.parse(event.dataTransfer.getData('text/plain'));
       const canvasEle: any = document.getElementById('contractCanvas' + props.pageIndex);
       if (typeof pagePointIndex === 'number' && pagePointIndex !== props.pageIndex) return;
       const offsetX = event.clientX - canvasEle.getBoundingClientRect().left - point_box_x;
       const offsetY = event.clientY - canvasEle.getBoundingClientRect().top - point_box_y;
       if (id) {
-        changeComponent(id, offsetX, offsetY)
+        changeComponent(id, offsetX, offsetY);
       } else {
         addComponent(type, offsetX, offsetY);
       }
@@ -141,7 +140,7 @@ export default defineComponent({
         pageIndex: props.pageIndex,
         componentIndex: index,
         component: {
-          ...pageData.componentList[index],
+          ...pageData.value.componentList[index],
           resizing: true
         }
       });
@@ -154,7 +153,7 @@ export default defineComponent({
           pageIndex: props.pageIndex,
           componentIndex: index,
           component: {
-            ...pageData.componentList[index],
+            ...pageData.value.componentList[index],
             resizing: false
           }
         });
@@ -168,7 +167,7 @@ export default defineComponent({
     };
 
     const resize = (event: any, index: any, direction: any) => {
-      const tempComponent = cloneDeep(pageData.componentList[index]);
+      const tempComponent = cloneDeep(pageData.value.componentList[index]);
       if (!tempComponent.resizing) return;
       const canvasEle: any = document.getElementById('contractCanvas' + props.pageIndex);
       const mousemoveX = event.clientX - canvasEle.getBoundingClientRect().left;
@@ -183,7 +182,7 @@ export default defineComponent({
             pageIndex: props.pageIndex,
             componentIndex: index,
             component: {
-              ...pageData.componentList[index],
+              ...pageData.value.componentList[index],
               width: tempWidth,
               height: tempHeight,
               x: mousemoveX,
@@ -201,7 +200,7 @@ export default defineComponent({
             pageIndex: props.pageIndex,
             componentIndex: index,
             component: {
-              ...pageData.componentList[index],
+              ...pageData.value.componentList[index],
               width: tempWidth,
               height: tempHeight,
               x: mousemoveX,
@@ -218,7 +217,7 @@ export default defineComponent({
             pageIndex: props.pageIndex,
             componentIndex: index,
             component: {
-              ...pageData.componentList[index],
+              ...pageData.value.componentList[index],
               width: tempWidth,
               height: tempHeight,
             }
@@ -264,17 +263,17 @@ export default defineComponent({
       return (
         <div
           id={'contractCanvas' + props.pageIndex}
-          class={cx('canvasContent')}
+          class={cx('canvasContent', { a3Page: specification.value === 'A3' })}
           onDrop={handleDrop}
           onDragover={handleDragOver}
           onClick={() => {
             selectComponent(-1)
           }}
         >
-          <img src={pageData.backgroundUrl} class={cx('backUrl')} alt="" crossorigin="anonymous" draggable="false" />
+          <img src={pageData.value.backgroundUrl} class={cx('backUrl')} alt="" crossorigin="anonymous" draggable="false" />
           {/* 组件列表 */}
           {
-            pageData.componentList.map((item: ComponentItem, index: number) => {
+            pageData.value.componentList.map((item: ComponentItem, index: number) => {
               return <div
                 id={item.id + ''}
                 class={cx('dragItem', { active: index === currentComponentIndex.value })}
@@ -317,10 +316,12 @@ export default defineComponent({
                       class={cx('rightTopPoint')}
                       onMousedown={(e: any) => {
                         e.stopPropagation();
-                        e.preventDefault()
+                        e.preventDefault();
                       }}
                       size={16}
-                      onClick={() => {
+                      onClick={(e: any) => {
+                        e.stopPropagation();
+                        e.preventDefault();
                         deleteComponent(index);
                       }}
                     ><CircleCloseFilled /></el-icon>

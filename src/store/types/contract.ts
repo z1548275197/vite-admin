@@ -2,13 +2,13 @@ type MaterialType = 1 | 2 | 3 | 4;
 type TimeFormatType = 'DD/MM/YYYY' | 'DD' | 'MM' | 'YY';
 
 export interface ComponentItem {
-  id: Number;
-  x: Number;
-  y: Number;
+  id: number;
+  x: number;
+  y: number;
   type: MaterialType;
   value: any;
-  width: Number;
-  height: Number;
+  width: number;
+  height: number;
   resizing?: Boolean;
   componentName?: string;
   placeholderTxt?: string;

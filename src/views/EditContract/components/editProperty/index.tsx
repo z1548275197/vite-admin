@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, reactive, ref, computed } from 'vue';
+import { defineComponent, onMounted, reactive, ref, computed, ComputedRef } from 'vue';
 import { useStore } from 'vuex';
 import classes from './index.module.scss';
 import classNames from 'classnames/bind';
@@ -10,11 +10,11 @@ const cx = classNames.bind(classes);
 export default defineComponent({
   setup() {
     const store = useStore();
-    const currentComponent = computed(() => {
+    const currentComponent: ComputedRef<ComponentItem | null> = computed(() => {
       return store.getters.currentComponent;
     });
 
-    const changePropertyHandle = (key: any, val: any) => {
+    const changePropertyHandle = (key: string, val: any) => {
       store.dispatch('EDIT_COMPONENT', {
         pageIndex: store.state.contract.currentPageIndex,
         componentIndex: store.state.contract.currentComponentIndex,
@@ -27,7 +27,7 @@ export default defineComponent({
 
 
     return () => {
-      if (!currentComponent.value) return null
+      if (!currentComponent.value) return null;
       return (
         <div class={cx('container')}>
           <div class={cx('title')}>控件属性</div>
@@ -167,7 +167,6 @@ export default defineComponent({
                 min={0}
                 modelValue={currentComponent.value.x}
                 onInput={(val: any) => {
-                  console.log(val)
                   changePropertyHandle('x', val || 0)
                 }}
               ></el-input>
