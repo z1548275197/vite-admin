@@ -15,6 +15,7 @@ export interface ComponentItem {
   relationKey?: string;
   fontSize?: number;
   letterSpace?: number;
+  lineHeight?: number;
   timeFormatType?: TimeFormatType;
 }
 

@@ -1,0 +1,41 @@
+.footerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 14px;
+  color: #000;
+
+  .prev {
+    cursor: pointer;
+    margin-right: 20px;
+
+    &.disabled {
+      color: #cbced1;
+      cursor: not-allowed;
+    }
+  }
+
+  .next {
+    cursor: pointer;
+    margin-left: 20px;
+
+    &.disabled {
+      color: #cbced1;
+      cursor: not-allowed;
+    }
+
+  }
+
+  .numBox {
+    display: flex;
+
+    .num {
+      width: 30px;
+      text-align: center;
+      //   &.disabled {
+      //   color: #cbced1;
+      // }
+    }
+  }
+}

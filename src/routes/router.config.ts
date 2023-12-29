@@ -1,6 +1,6 @@
 // router/router.config.ts
 import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
-import Layout from '@/layouts/index.tsx';
+import Layout from '@/layouts/index';
 export const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -18,11 +18,17 @@ export const routes: Array<RouteRecordRaw> = [
     path: '/contract',
     name: 'Contract',
     component: () => import('@/views/contract'),
+    meta: {
+      title: '',
+    },
   },
   {
     path: '/editContract',
     name: 'EditContract',
     component: () => import('@/views/EditContract'),
-  },
+    meta: {
+      title: '自定义合约',
+    },
+  }
 ]
 

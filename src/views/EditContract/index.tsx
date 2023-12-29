@@ -1,11 +1,13 @@
 import { defineComponent, onMounted, reactive, ref, computed } from 'vue';
 import { useStore } from 'vuex';
+import { debounce } from 'lodash';
 import classes from './index.module.scss';
 import classNames from 'classnames/bind';
 import EditHeader from './components/editHeader';
 import PageContent from './components/pageContent';
 import AddedControl from './components/addedControl';
 import EditProperty from './components/editProperty';
+import Pagination from './components/pagination';
 
 const cx = classNames.bind(classes);
 
@@ -28,7 +30,7 @@ export default defineComponent({
     }
 
     const initData = async () => {
-      const res = await getPageSize()
+      const res = await getPageSize();
       store.dispatch('UPDATE_SPECIFICATION', {
         specification: res
       })
@@ -118,9 +120,28 @@ export default defineComponent({
       })
     }
 
+    const debouncedScroll = debounce(() => {
+      const ele: any = document.getElementById('mainContainer');
+      const focusPage = Math.floor(ele.scrollTop / 900);
+      if (dataSource.value.currentPageIndex !== focusPage) {
+        store.dispatch('SELECT_COMPONENT', {
+          componentIndex: -1,
+          pageIndex: focusPage
+        });
+      }
+    }, 500)
+
     onMounted(() => {
+      document.addEventListener('keydown', function (event) {
+        if ((event.shiftKey && event.key === 'R') || (event.shiftKey && event.code === 'KeyR')) {
+          console.log('Shift + R 被按下');
+          store.dispatch('UPDATE_RESIZESCHEMA', {
+            resizeSchema: dataSource.value.resizeSchema === 1 ? 2 : 1
+          })
+        }
+      });
+
       initData();
-      console.log(dataSource, 'dataSource')
     })
 
     return () => {
@@ -130,17 +151,22 @@ export default defineComponent({
             <EditHeader></EditHeader>
           </el-header>
           <el-container>
-            <el-main class={cx('main')} id="mainContainer">
-              {
-                dataSource.value.pageList.map((item: any, index: number) => {
-                  return (
-                    <PageContent
-                      pageIndex={index}
-                    ></PageContent>
-                  )
-                })
-              }
-            </el-main>
+            <el-container class={cx('content')}>
+              <el-main class={cx('main')} id="mainContainer" onScroll={debouncedScroll}>
+                {
+                  dataSource.value.pageList.map((item: any, index: number) => {
+                    return (
+                      <PageContent
+                        pageIndex={index}
+                      ></PageContent>
+                    )
+                  })
+                }
+              </el-main>
+              <el-footer height="40px" class={cx('footer')}>
+                <Pagination></Pagination>
+              </el-footer>
+            </el-container>
             <el-aside width="200px" class={cx('leftAside')}>
               <AddedControl></AddedControl>
             </el-aside>

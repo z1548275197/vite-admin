@@ -44,9 +44,17 @@ export default defineComponent({
   },
   setup(props: any) {
     const store = useStore();
+    const state: any = reactive({
+      dragIndex: -1,
+      virtualX: 0,
+      virtualY: 0,
+      victuryItem: null
+    });
+
     const pageData: ComputedRef<PageItem> = computed(() => store.state.contract.pageList[props.pageIndex]);
     const currentComponentIndex: ComputedRef<number> = computed(() => store.state.contract.currentComponentIndex);
     const specification: ComputedRef<'A3' | 'A4'> = computed(() => store.state.contract.specification);
+    const resizeSchema: ComputedRef<1 | 2> = computed(() => store.state.contract.resizeSchema);
 
     // 拖拽进入画布后，增加组件
     const addComponent = (type: any, x: any, y: any) => {
@@ -130,9 +138,20 @@ export default defineComponent({
           pagePointIndex: props.pageIndex
         })
       );
+      state.victuryItem = {
+        ...item,
+        point_X: offsetX,
+        point_Y: offsetY
+      }
     }
 
-
+    const dragComponentHandle = (e: any) => {
+      const canvasEle: any = document.getElementById('contractCanvas' + props.pageIndex);
+      const offsetX = e.clientX - canvasEle.getBoundingClientRect().left - state.victuryItem.point_X;
+      const offsetY = e.clientY - canvasEle.getBoundingClientRect().top - state.victuryItem.point_Y;
+      state.victuryItem.x = offsetX;
+      state.victuryItem.y = offsetY;
+    }
 
     const startResize = (event: any, index: any, direction: any) => {
       event.preventDefault();
@@ -175,7 +194,7 @@ export default defineComponent({
       if (direction === 'leftTop') {
         const tempWidth = tempComponent.x - mousemoveX + tempComponent.width;
         const tempHeight = tempComponent.y - mousemoveY + tempComponent.height;
-        if ((tempWidth < 10) || (tempHeight < 10)) {
+        if ((tempWidth < 20) || (tempHeight < 20)) {
           return
         } else {
           store.dispatch('EDIT_COMPONENT', {
@@ -193,7 +212,7 @@ export default defineComponent({
       } else if (direction === 'leftBottom') {
         const tempWidth = tempComponent.x - mousemoveX + tempComponent.width;
         const tempHeight = mousemoveY - tempComponent.y;
-        if ((tempWidth < 10) || (tempHeight < 10)) {
+        if ((tempWidth < 20) || (tempHeight < 20)) {
           return
         } else {
           store.dispatch('EDIT_COMPONENT', {
@@ -210,7 +229,7 @@ export default defineComponent({
       } else if (direction === 'rightBottom') {
         const tempWidth = mousemoveX - tempComponent.x;
         const tempHeight = mousemoveY - tempComponent.y;
-        if ((tempWidth < 10) || (tempHeight < 10)) {
+        if ((tempWidth < 20) || (tempHeight < 20)) {
           return
         } else {
           store.dispatch('EDIT_COMPONENT', {
@@ -220,6 +239,64 @@ export default defineComponent({
               ...pageData.value.componentList[index],
               width: tempWidth,
               height: tempHeight,
+            }
+          });
+        }
+      } else if (direction === 'left') {
+        const tempWidth = tempComponent.x - mousemoveX + tempComponent.width;
+        if (tempWidth < 20) {
+          return;
+        } else {
+          store.dispatch('EDIT_COMPONENT', {
+            pageIndex: props.pageIndex,
+            componentIndex: index,
+            component: {
+              ...pageData.value.componentList[index],
+              width: tempWidth,
+              x: mousemoveX,
+            }
+          });
+        }
+      } else if (direction === 'right') {
+        const tempWidth = mousemoveX - tempComponent.x;
+        if (tempWidth < 20) {
+          return
+        } else {
+          store.dispatch('EDIT_COMPONENT', {
+            pageIndex: props.pageIndex,
+            componentIndex: index,
+            component: {
+              ...pageData.value.componentList[index],
+              width: tempWidth,
+            }
+          });
+        }
+      } else if (direction === 'top') {
+        const tempHeight = tempComponent.y - mousemoveY + tempComponent.height;
+        if (tempHeight < 20) {
+          return;
+        } else {
+          store.dispatch('EDIT_COMPONENT', {
+            pageIndex: props.pageIndex,
+            componentIndex: index,
+            component: {
+              ...pageData.value.componentList[index],
+              height: tempHeight,
+              y: mousemoveY
+            }
+          });
+        }
+      } else if (direction === 'bottom') {
+        const tempHeight = mousemoveY - tempComponent.y;
+        if (tempHeight < 20) {
+          return;
+        } else {
+          store.dispatch('EDIT_COMPONENT', {
+            pageIndex: props.pageIndex,
+            componentIndex: index,
+            component: {
+              ...pageData.value.componentList[index],
+              height: tempHeight
             }
           });
         }
@@ -242,7 +319,12 @@ export default defineComponent({
 
       if (item.type === 2) {
         return (
-          <div class={cx('moreLine')}>{item.value || item.placeholderTxt}</div>
+          <div
+            class={cx('moreLine')}
+            style={{
+              lineHeight: item.lineHeight || 1.2,
+            }}
+          >{item.value || item.placeholderTxt}</div>
         )
       }
 
@@ -266,9 +348,6 @@ export default defineComponent({
           class={cx('canvasContent', { a3Page: specification.value === 'A3' })}
           onDrop={handleDrop}
           onDragover={handleDragOver}
-          onClick={() => {
-            selectComponent(-1)
-          }}
         >
           <img src={pageData.value.backgroundUrl} class={cx('backUrl')} alt="" crossorigin="anonymous" draggable="false" />
           {/* 组件列表 */}
@@ -284,7 +363,8 @@ export default defineComponent({
                   height: item.height + 'px',
                   color: item.value ? '#000' : '#bebebe',
                   fontSize: `${item.fontSize || 16}px`,
-                  letterSpacing: item.letterSpace + 'px'
+                  letterSpacing: item.letterSpace + 'px',
+                  opacity: state.victuryItem && state.victuryItem.id === item.id ? 0 : 1
                 }}
                 draggable
                 onClick={(e: any) => {
@@ -294,26 +374,54 @@ export default defineComponent({
                 onDragstart={(e: any) => {
                   startDragComponent(e, item);
                 }}
+                onDrag={(e: any) => {
+                  dragComponentHandle(e);
+                }}
+                onDragend={() => {
+                  state.victuryItem = null;
+                }}
               >
                 {
-                  index === currentComponentIndex.value && (
+                  (index === currentComponentIndex.value && resizeSchema.value === 1) && (
                     <div class={cx('leftTopPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'leftTop')}></div>
                   )
                 }
                 {
-                  index === currentComponentIndex.value && (
+                  (index === currentComponentIndex.value && resizeSchema.value === 1) && (
                     <div class={cx('leftBottomPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'leftBottom')}></div>
                   )
                 }
                 {
-                  index === currentComponentIndex.value && (
+                  (index === currentComponentIndex.value && resizeSchema.value === 1) && (
                     <div class={cx('rightBottomPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'rightBottom')}></div>
                   )
                 }
+
+                {
+                  (index === currentComponentIndex.value && resizeSchema.value === 2) && (
+                    <div class={cx('leftPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'left')}></div>
+                  )
+                }
+                {
+                  (index === currentComponentIndex.value && resizeSchema.value === 2) && (
+                    <div class={cx('rightPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'right')}></div>
+                  )
+                }
+                {
+                  (index === currentComponentIndex.value && resizeSchema.value === 2) && (
+                    <div class={cx('topPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'top')}></div>
+                  )
+                }
+                {
+                  (index === currentComponentIndex.value && resizeSchema.value === 2) && (
+                    <div class={cx('bottomPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'bottom')}></div>
+                  )
+                }
+
                 {
                   index === currentComponentIndex.value && (
                     <el-icon
-                      class={cx('rightTopPoint')}
+                      class={cx('rightTopBtn')}
                       onMousedown={(e: any) => {
                         e.stopPropagation();
                         e.preventDefault();
@@ -330,6 +438,26 @@ export default defineComponent({
                 {renderComponent(item)}
               </div>
             })
+          }
+          {/* 虚拟拖拽内容 */}
+          {
+            state.victuryItem && (
+              <div
+                id={state.victuryItem.id + 'virtual'}
+                class={cx('dragItem', 'victuryItem')}
+                style={{
+                  left: state.victuryItem.x + 'px',
+                  top: state.victuryItem.y + 'px',
+                  width: state.victuryItem.width + 'px',
+                  height: state.victuryItem.height + 'px',
+                  color: state.victuryItem.value ? '#000' : '#bebebe',
+                  fontSize: `${state.victuryItem.fontSize || 16}px`,
+                  letterSpacing: state.victuryItem.letterSpace + 'px'
+                }}
+              >
+                {renderComponent(state.victuryItem)}
+              </div>
+            )
           }
         </div>
       )

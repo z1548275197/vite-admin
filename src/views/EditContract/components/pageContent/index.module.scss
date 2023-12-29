@@ -7,6 +7,7 @@
   margin: 0 auto;
   margin-bottom: 20px;
   overflow: hidden;
+
   &.a3Page {
     min-width: 1600.66px;
     width: 1600.66px;
@@ -28,6 +29,11 @@
     background: #f6f6f6;
     text-align: left;
     font-size: 16px;
+
+    &.victuryItem {
+      z-index: 9;
+    }
+
     &:active {
       cursor: grabbing;
     }
@@ -36,7 +42,7 @@
       border: 1px solid #2e73f5;
     }
 
-    
+
 
     .singleLine {
       height: 100%;
@@ -44,10 +50,13 @@
       display: flex;
       align-items: center;
       overflow: hidden;
+      white-space: nowrap;
     }
 
     .moreLine {
       line-height: 1.2;
+      height: 100%;
+      overflow: hidden;
     }
 
 
@@ -55,16 +64,66 @@
       width: 6px;
       height: 6px;
       background-color: #2e73f5;
+
+      &.leftTopPoint {
+        position: absolute;
+        left: -2px;
+        top: -2px;
+        cursor: nw-resize;
+      }
+
+      &.leftBottomPoint {
+        position: absolute;
+        left: -2px;
+        bottom: -2px;
+        cursor: sw-resize;
+      }
+
+      &.rightBottomPoint {
+        position: absolute;
+        right: -2px;
+        bottom: -2px;
+        cursor: se-resize;
+      }
+
+      &.leftPoint {
+        position: absolute;
+        left: -2px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        cursor: w-resize;
+      }
+
+      &.rightPoint {
+        position: absolute;
+        right: -2px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        cursor: e-resize;
+      }
+
+      &.topPoint {
+        position: absolute;
+        top: -2px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        cursor: n-resize;
+      }
+
+      &.bottomPoint {
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        cursor: s-resize;
+      }
     }
 
-    .leftTopPoint {
-      position: absolute;
-      left: -2px;
-      top: -2px;
-      cursor: nw-resize;
-    }
-
-    .rightTopPoint {
+    .rightTopBtn {
       position: absolute;
       right: -6px;
       top: -6px;
@@ -72,18 +131,6 @@
       cursor: pointer;
     }
 
-    .leftBottomPoint {
-      position: absolute;
-      left: -2px;
-      bottom: -2px;
-      cursor: sw-resize;
-    }
 
-    .rightBottomPoint {
-      position: absolute;
-      right: -2px;
-      bottom: -2px;
-      cursor: se-resize;
-    }
   }
 }

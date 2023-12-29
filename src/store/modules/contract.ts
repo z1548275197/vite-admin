@@ -6,6 +6,7 @@ interface State {
   currentPageIndex: number;
   currentComponentIndex: number;
   specification: 'A3' | 'A4';
+  resizeSchema: 1 | 2;
 }
 
 const state: State = {
@@ -35,6 +36,7 @@ const state: State = {
   currentPageIndex: 0,      // 当前选择的页面索引
   currentComponentIndex: -1, // 当前选择的组件索引
   specification: 'A4', // 纸张规格
+  resizeSchema: 1,  // 拖拽尺寸模式
 };
 const getters = {
   currentPageData(state: State) {
@@ -61,11 +63,15 @@ const mutations = {
     state.pageList[paylod.pageIndex].componentList[paylod.componentIndex] = paylod.component;
   },
   SELECT_COMPONENT(state: State, paylod: any): void {
+    console.log('paylod.componentIndex', paylod.componentIndex)
     state.currentComponentIndex = paylod.componentIndex;
     state.currentPageIndex = paylod.pageIndex;
   },
   UPDATE_SPECIFICATION(state: State, paylod: any): void {
     state.specification = paylod.specification;
+  },
+  UPDATE_RESIZESCHEMA(state: State, paylod: any): void {
+    state.resizeSchema = paylod.resizeSchema;
   },
 };
 
@@ -76,7 +82,7 @@ const actions = {
   UPDATE_COMPONENT(context:any,paylod:any){
     context.commit('UPDATE_COMPONENT', paylod);
   },
-  EDIT_COMPONENT(context:any,paylod:any){
+  EDIT_COMPONENT(context: any, paylod: any) {
     context.commit('EDIT_COMPONENT', paylod);
   },
   SELECT_COMPONENT(context:any,paylod:any): void {
@@ -84,6 +90,9 @@ const actions = {
   },
   UPDATE_SPECIFICATION(context:any,paylod:any): void {
     context.commit('UPDATE_SPECIFICATION', paylod);
+  },
+  UPDATE_RESIZESCHEMA(context:any,paylod:any): void {
+    context.commit('UPDATE_RESIZESCHEMA', paylod);
   },
 };
 

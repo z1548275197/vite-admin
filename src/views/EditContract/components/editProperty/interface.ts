@@ -9,3 +9,7 @@ export const letterSpaceList = [
 export const timeFormatList = [
   'DD/MM/YYYY', 'DD', 'MM', 'YY'
 ]
+
+export const lineHeightList = [
+  1.1, 1.2, 1.3, 1.4, 1.5, 1.6
+]

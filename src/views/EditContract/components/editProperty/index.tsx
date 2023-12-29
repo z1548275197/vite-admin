@@ -3,7 +3,7 @@ import { useStore } from 'vuex';
 import classes from './index.module.scss';
 import classNames from 'classnames/bind';
 import { ComponentItem } from '@/store/types/contract';
-import { fontSizeList, letterSpaceList, timeFormatList } from './interface';
+import { fontSizeList, letterSpaceList, timeFormatList, lineHeightList } from './interface';
 
 const cx = classNames.bind(classes);
 
@@ -24,7 +24,6 @@ export default defineComponent({
         }
       })
     }
-
 
     return () => {
       if (!currentComponent.value) return null;
@@ -117,6 +116,34 @@ export default defineComponent({
                       letterSpaceList.map((item: any) => {
                         return (
                           <el-option key={item} label={item + 'px'} value={item}></el-option>
+                        )
+                      })
+                    }
+                  </el-select>
+                </div>
+              </div>
+            )
+          }
+
+          {
+            [2].includes(currentComponent.value.type) && (
+              <div class={cx('propertyItem')}>
+                <div class={cx('propertyName')}>行高:</div>
+                <div class={cx('propertyValue')}>
+                  <el-select
+                    size="small"
+                    style={{ width: '80%' }}
+                    clearable
+                    modelValue={currentComponent.value.lineHeight || 1.2}
+                    placeholder="请选择行高"
+                    onChange={(val: any) => {
+                      changePropertyHandle('lineHeight', val)
+                    }}
+                  >
+                    {
+                      lineHeightList.map((item: any) => {
+                        return (
+                          <el-option key={item} label={item} value={item}></el-option>
                         )
                       })
                     }
