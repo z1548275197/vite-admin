@@ -2,7 +2,7 @@ import { defineComponent, onMounted, reactive, ref, computed, ComputedRef } from
 import { useStore } from 'vuex';
 import classes from './index.module.scss';
 import classNames from 'classnames/bind';
-import { ComponentItem } from '@/store/types/contract';
+import { ComponentItem, MaterialTypeMap } from '@/store/types/contract';
 import { fontSizeList, letterSpaceList, timeFormatList, lineHeightList } from './interface';
 
 const cx = classNames.bind(classes);
@@ -49,7 +49,7 @@ export default defineComponent({
           </div>
 
           {
-            [1, 2, 4].includes(currentComponent.value.type) && (
+            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>提示文案:</div>
                 <div class={cx('propertyValue')}>
@@ -70,7 +70,7 @@ export default defineComponent({
           }
 
           {
-            [1, 2, 4].includes(currentComponent.value.type) && (
+            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>字号:</div>
                 <div class={cx('propertyValue')}>
@@ -98,7 +98,7 @@ export default defineComponent({
           }
 
           {
-            [1, 2, 4].includes(currentComponent.value.type) && (
+            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>横向间距:</div>
                 <div class={cx('propertyValue')}>
@@ -126,7 +126,7 @@ export default defineComponent({
           }
 
           {
-            [2].includes(currentComponent.value.type) && (
+            [MaterialTypeMap.MORE_LINE].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>行高:</div>
                 <div class={cx('propertyValue')}>
@@ -154,7 +154,7 @@ export default defineComponent({
           }
 
           {
-            [4].includes(currentComponent.value.type) && (
+            [MaterialTypeMap.DATE].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>日期格式:</div>
                 <div class={cx('propertyValue')}>

@@ -18,17 +18,17 @@ const state: State = {
       icon: 'https://fr-static.jiazhengye.cn/danhangwenben.67065f09d47bf6c3.png'
     },
     {
-      type: 2,
+      type: 6,
       name: '多行文本',
       icon: 'https://fr-static.jiazhengye.cn/duohangwenben.6dd1111a4371f793.png'
     },
     {
-      type: 3,
+      type: 4,
       name: '复选框',
       icon: 'https://fr-static.jiazhengye.cn/fuxuankuang.58a02d57f1c28f89.png'
     },
     {
-      type: 4,
+      type: 3,
       name: '填写日期',
       icon: 'https://fr-static.jiazhengye.cn/rili.59af711857f188c9.png' 
     },

@@ -4,37 +4,41 @@ import classes from './index.module.scss';
 import classNames from 'classnames/bind';
 import { cloneDeep } from 'lodash';
 import { CircleCloseFilled } from '@element-plus/icons-vue';
-import { PageItem, ComponentItem } from '@/store/types/contract';
+import { PageItem, ComponentItem, MaterialTypeMap } from '@/store/types/contract';
 
 const cx = classNames.bind(classes);
 
 const componentMap: any = {
-  1: {
+  [MaterialTypeMap.SINGLE_LINE]: {
     value: '',
     width: 150,
     height: 30,
     placeholderTxt: '请输入单行文本',
-    componentName: '单行文本'
+    componentName: '单行文本',
+    relationKey: ''
   },
-  2: {
+  [MaterialTypeMap.MORE_LINE]: {
     value: '',
     width: 150,
     height: 60,
     placeholderTxt: '请输入多行文本',
-    componentName: '多行文本'
+    componentName: '多行文本',
+    relationKey: ''
   },
-  3: {
+  [MaterialTypeMap.CHECKBOX]: {
     value: false,
     width: 30,
     height: 30,
-    componentName: '复选框'
+    componentName: '复选框',
+    relationKey: ''
   },
-  4: {
+  [MaterialTypeMap.DATE]: {
     value: '',
     width: 150,
     height: 30,
     timeFormatType: 'DD/MM/YYYY',
-    componentName: '填写日期'
+    componentName: '填写日期',
+    relationKey: ''
   }
 }
 
@@ -311,13 +315,13 @@ export default defineComponent({
     }
 
     const renderComponent = (item: ComponentItem) => {
-      if (item.type === 1) {
+      if (item.type === MaterialTypeMap.SINGLE_LINE) {
         return (
           <div class={cx('singleLine')}>{item.value || item.placeholderTxt}</div>
         )
       }
 
-      if (item.type === 2) {
+      if (item.type === MaterialTypeMap.MORE_LINE) {
         return (
           <div
             class={cx('moreLine')}
@@ -328,12 +332,12 @@ export default defineComponent({
         )
       }
 
-      if (item.type === 3) {
+      if (item.type === MaterialTypeMap.CHECKBOX) {
         return (
           <el-checkbox style={{ marginLeft: '7px', marginTop: '6px' }} model-value={item.value}></el-checkbox>
         )
       }
-      if (item.type === 4) {
+      if (item.type === MaterialTypeMap.DATE) {
         return (
           <div class={cx('singleLine')}>{item.value || item.timeFormatType}</div>
         )
