@@ -6,6 +6,7 @@ import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { ArrowRightBold } from '@element-plus/icons-vue';
 import { MaterialItem } from '@/store/types/contract';
+import { createContract } from '@/apis/contract';
 
 const cx = classNames.bind(classes);
 
@@ -51,6 +52,10 @@ export default defineComponent({
     // 
     const saveContract = () => {
       console.log(store.state.contract.pageList)
+      createContract({
+        contract_template_uuid: '89c2df213dfef62407edfdd3f8b54c6b',
+        template_page_data: JSON.stringify(store.state.contract.pageList)
+      })
     }
 
     return () => {

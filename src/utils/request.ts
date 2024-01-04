@@ -14,6 +14,7 @@ const axiosReq = axios.create({
 axiosReq.interceptors.request.use(
   (conf: any) => {
     const { baseURL, method, headers, data, url } = conf;
+    console.log(import.meta.env, 'baseURL')
     const config = {
       ...conf,
       baseURL: baseURL,
@@ -39,10 +40,7 @@ axiosReq.interceptors.response.use(
         case 0:
           return data.data;
         case 4: // token失效
-          console.log('到我这里')
-          localStorage.clear();
           ElMessage.error(msg);
-          router.replace('/login')
           return Promise.reject(res);
         default:
           ElMessage.error(msg);
