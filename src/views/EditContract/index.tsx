@@ -1,6 +1,9 @@
 import { defineComponent, onMounted, reactive, ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { debounce } from 'lodash';
+import Cookies from 'js-cookie';
+import { getContractData } from '@/apis/contract'
 import classes from './index.module.scss';
 import classNames from 'classnames/bind';
 import EditHeader from './components/editHeader';
@@ -13,6 +16,7 @@ const cx = classNames.bind(classes);
 
 export default defineComponent({
   setup() {
+    const router = useRouter();
     const store = useStore();
     const dataSource: any = computed(() => store.state.contract);
 
@@ -29,7 +33,7 @@ export default defineComponent({
       })
     }
 
-    const initData = async () => {
+    const initPage = async () => {
       const res = await getPageSize();
       store.dispatch('UPDATE_SPECIFICATION', {
         specification: res
@@ -120,6 +124,23 @@ export default defineComponent({
       })
     }
 
+    const bindEvent = () => {
+      document.addEventListener('keydown', function (event) {
+        if ((event.shiftKey && event.key === 'R') || (event.shiftKey && event.code === 'KeyR')) {
+          console.log('Shift + R 被按下');
+          store.dispatch('UPDATE_RESIZESCHEMA', {
+            resizeSchema: dataSource.value.resizeSchema === 1 ? 2 : 1
+          })
+        }
+      });
+    }
+
+    const initData = async () => {
+      const res: any = await getContractData({
+        contract_template_uuid: router.currentRoute.value.query.contract_template_uuid
+      });
+    }
+
     const debouncedScroll = debounce(() => {
       const ele: any = document.getElementById('mainContainer');
       const focusPage = Math.floor(ele.scrollTop / 900);
@@ -132,16 +153,10 @@ export default defineComponent({
     }, 500)
 
     onMounted(() => {
-      document.addEventListener('keydown', function (event) {
-        if ((event.shiftKey && event.key === 'R') || (event.shiftKey && event.code === 'KeyR')) {
-          console.log('Shift + R 被按下');
-          store.dispatch('UPDATE_RESIZESCHEMA', {
-            resizeSchema: dataSource.value.resizeSchema === 1 ? 2 : 1
-          })
-        }
-      });
-
-      initData();
+      console.log(router.currentRoute.value, 'routerr')
+      console.log(Cookies.get('PHPSESSID'), 'PHPSESSID')
+      bindEvent()
+      initPage();
     })
 
     return () => {

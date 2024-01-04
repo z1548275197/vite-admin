@@ -21,35 +21,7 @@ export default defineComponent({
       event.dataTransfer.setData('text/plain', JSON.stringify({ type: item.type }));
     }
 
-    // 生成pdf并打开
-    const addPdf = () => {
-      const doc = new jsPDF({
-        // orientation: 'landscape',
-        unit: 'px',
-        format: 'a4',
-      });
-
-
-      html2canvas(document.querySelector('#canvas') as any, {
-        useCORS: true,
-      }).then(canvas => {
-        // 将 canvas 元素转换为图像数据
-        const imgData = canvas.toDataURL('image/png');
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const pageHeight = doc.internal.pageSize.getHeight();
-        // 将图像数据添加到 PDF 文档中
-        doc.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight, 'image', 'FAST');
-        // doc.addPage()
-        // doc.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight, 'image', 'FAST');
-        // doc.addPage()
-        // doc.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight, 'image', 'FAST');
-        // 下载 PDF 文件
-        doc.save('html-to-pdf.pdf');
-        doc.output('dataurlnewwindow');
-      });
-    }
     // 保存合同
-    // 
     const saveContract = () => {
       console.log(store.state.contract.pageList)
       createContract({
