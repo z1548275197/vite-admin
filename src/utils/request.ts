@@ -2,6 +2,7 @@ import router from '@/routes/index';
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
 import qs from 'querystring';
+import Cookies from 'js-cookie';
 import { isObject, changeForm, getCookie } from './helper';
 
 const apiUrl: any = import.meta.env.VITE_BASE_API;
@@ -14,14 +15,13 @@ const axiosReq = axios.create({
 axiosReq.interceptors.request.use(
   (conf: any) => {
     const { baseURL, method, headers, data, url } = conf;
-    console.log(import.meta.env, 'baseURL')
     const config = {
       ...conf,
       baseURL: baseURL,
       headers: {
         ...headers,
         'Content-Type': 'application/x-www-form-urlencoded',
-        'authorization': localStorage.getItem('token') || ''
+        'token': Cookies.get('PHPSESSID') || ''
       },
     };
     config.data = qs.stringify(data);

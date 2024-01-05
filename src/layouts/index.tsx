@@ -12,7 +12,6 @@ export default defineComponent({
       menuList: [],
     });
 
-    console.log(classes)
     const getMenuList = async () => {
       const res = await getAuthMenu();
       if (res) {

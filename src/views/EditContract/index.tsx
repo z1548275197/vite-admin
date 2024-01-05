@@ -3,7 +3,7 @@ import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { debounce } from 'lodash';
 import Cookies from 'js-cookie';
-import { getContractData } from '@/apis/contract'
+import { getContractData, getContractField } from '@/apis/contract'
 import classes from './index.module.scss';
 import classNames from 'classnames/bind';
 import EditHeader from './components/editHeader';
@@ -38,90 +38,6 @@ export default defineComponent({
       store.dispatch('UPDATE_SPECIFICATION', {
         specification: res
       })
-      store.dispatch('INIT_CONTRACT', {
-        pageList: [
-          {
-            backgroundUrl: 'https://fr-static.jiazhengye.cn/658551d686dad-1.bb60bcc151c2fafd.jpg',
-            componentList: [
-              {
-                id: 'test1111',
-                type: 1,
-                x: 0,
-                y: 0,
-                value: '111',
-                width: 150,
-                height: 30,
-                componentName: '单行文本'
-              },
-              {
-                id: 'test2222',
-                type: 1,
-                x: 0,
-                y: 800,
-                value: '222',
-                width: 150,
-                height: 30,
-                componentName: '单行文本'
-              },
-              {
-                id: 'test3333',
-                type: 1,
-                x: 500,
-                y: 800,
-                value: '333',
-                width: 150,
-                height: 30,
-                componentName: '单行文本'
-              },
-            ]
-          },
-          {
-            backgroundUrl: 'https://fr-static.jiazhengye.cn/658551d686dad-2.3ce920bc76b3d683.jpg',
-            componentList: []
-          },
-        ]
-        // pageList: [
-        //   {
-        //     backgroundUrl: 'https://fr-static.jiazhengye.cn/0001.0388eb5ca865f91f.jpg',
-        //     componentList: [
-        //       {
-        //         id: 'test1111',
-        //         type: 1,
-        //         x: 0,
-        //         y: 0,
-        //         value: '111',
-        //         width: 150,
-        //         height: 30,
-        //         componentName: '单行文本'
-        //       },
-        //       {
-        //         id: 'test2222',
-        //         type: 1,
-        //         x: 0,
-        //         y: 800,
-        //         value: '222',
-        //         width: 150,
-        //         height: 30,
-        //         componentName: '单行文本'
-        //       },
-        //       {
-        //         id: 'test3333',
-        //         type: 1,
-        //         x: 500,
-        //         y: 800,
-        //         value: '333',
-        //         width: 150,
-        //         height: 30,
-        //         componentName: '单行文本'
-        //       },
-        //     ]
-        //   },
-        //   {
-        //     backgroundUrl: 'https://fr-static.jiazhengye.cn/0002.2d012d206bdecc31.jpg',
-        //     componentList: []
-        //   },
-        // ]
-      })
     }
 
     const bindEvent = () => {
@@ -139,6 +55,21 @@ export default defineComponent({
       const res: any = await getContractData({
         contract_template_uuid: router.currentRoute.value.query.contract_template_uuid
       });
+      if (res) {
+        store.dispatch('INIT_CONTRACT', {
+          pageList: res.list,
+          status: res.status
+        })
+      }
+    }
+
+    const getFields = async () => {
+      const res: any = await getContractField();
+      if (res) {
+        store.dispatch('INIT_CONTRACT_FIELD', {
+          fieldList: res.list
+        })
+      }
     }
 
     const debouncedScroll = debounce(() => {
@@ -153,10 +84,10 @@ export default defineComponent({
     }, 500)
 
     onMounted(() => {
-      console.log(router.currentRoute.value, 'routerr')
-      console.log(Cookies.get('PHPSESSID'), 'PHPSESSID')
       bindEvent()
       initPage();
+      getFields();
+      initData();
     })
 
     return () => {

@@ -3,7 +3,6 @@ import classes from './index.module.scss'
 export default defineComponent({
   name: 'TopNav',
   setup() {
-    console.log(classes)
     return () => {
       return (
         <div class={classes.container}>

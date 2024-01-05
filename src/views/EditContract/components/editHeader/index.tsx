@@ -1,19 +1,27 @@
 import { defineComponent, onMounted, reactive, ref, computed, ComputedRef } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import classes from './index.module.scss';
 import classNames from 'classnames/bind';
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
-import { ArrowRightBold } from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus';
+import { ArrowDownBold } from '@element-plus/icons-vue';
 import { MaterialItem } from '@/store/types/contract';
 import { createContract } from '@/apis/contract';
 
 const cx = classNames.bind(classes);
 
+const statusMap: any = {
+  0: '删除',
+  1: '未审核',
+  2: '已审核'
+}
+
 export default defineComponent({
   setup() {
+    const router = useRouter();
     const store = useStore();
     const materialList: ComputedRef<MaterialItem[]> = computed(() => store.state.contract.materialList);
+    const pageStatus: ComputedRef<any> = computed(() => store.state.contract.status);
 
     // 开始拖拽工具栏组件事件
     const startDragUtil = (event: any, item: MaterialItem) => {
@@ -22,12 +30,20 @@ export default defineComponent({
     }
 
     // 保存合同
-    const saveContract = () => {
+    const saveContract = async (type: any) => {
       console.log(store.state.contract.pageList)
-      createContract({
-        contract_template_uuid: '89c2df213dfef62407edfdd3f8b54c6b',
-        template_page_data: JSON.stringify(store.state.contract.pageList)
-      })
+      const res = await createContract({
+        contract_template_uuid: router.currentRoute.value.query.contract_template_uuid,
+        template_page_data: JSON.stringify(store.state.contract.pageList),
+        status: pageStatus.value,
+        is_delete: pageStatus.value === 0 ? 1 : 0
+      });
+      if (res) {
+        ElMessage.success('保存成功');
+        if (type) {
+          window.close();
+        }
+      }
     }
 
     return () => {
@@ -51,16 +67,43 @@ export default defineComponent({
             }
           </div>
           <div class={cx('btnBox')}>
-            {/* <el-button onClick={addPdf}>生成PDF</el-button> */}
-            <el-button onClick={saveContract} class={cx('btn')}>
+            <el-button class={cx('btn')}>
               规格: {store.state.contract.specification}
             </el-button>
-            <el-button onClick={saveContract} class={cx('btn')}>
-              状态: 审核
-              <el-icon size={12} class={cx('btnIcon')}><ArrowRightBold /></el-icon>
-            </el-button>
-            <el-button onClick={saveContract} type="primary" class={cx('btn')}>保存</el-button>
-            <el-button onClick={saveContract} type="primary" class={cx('btn')}>保存并关闭</el-button>
+            <el-dropdown
+              size="large"
+              trigger="click"
+              onCommand={(val: any) => {
+                store.dispatch('UPDATE_STATUS', {
+                  status: val
+                })
+              }}
+            >
+              {{
+                default: () => {
+                  return (
+                    <el-button class={cx('btn')} size="small">
+                      状态: {statusMap[pageStatus.value]}  <el-icon size={10} ><ArrowDownBold /></el-icon>
+                    </el-button>
+                  );
+                },
+                dropdown: () => {
+                  return (
+                    <el-dropdown-menu>
+                      {
+                        Object.keys(statusMap).map((item: any) => {
+                          return (
+                            <el-dropdown-item key={item} command={item}>{statusMap[item]}</el-dropdown-item>
+                          )
+                        })
+                      }
+                    </el-dropdown-menu>
+                  );
+                },
+              }}
+            </el-dropdown>
+            <el-button onClick={() => saveContract(0)} type="primary" class={cx('btn')}>保存</el-button>
+            <el-button onClick={() => saveContract(1)} type="primary" class={cx('btn')}>保存并关闭</el-button>
           </div>
         </div>
       )

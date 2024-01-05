@@ -7,6 +7,8 @@ interface State {
   currentComponentIndex: number;
   specification: 'A3' | 'A4';
   resizeSchema: 1 | 2;
+  status: 1 | 2 | 0;
+  fieldList: any[];
 }
 
 const state: State = {
@@ -37,6 +39,8 @@ const state: State = {
   currentComponentIndex: -1, // 当前选择的组件索引
   specification: 'A4', // 纸张规格
   resizeSchema: 1,  // 拖拽尺寸模式
+  status: 1,
+  fieldList: []
 };
 const getters = {
   currentPageData(state: State) {
@@ -53,8 +57,12 @@ const getters = {
 const mutations = {
   INIT_CONTRACT(state: State, paylod: any): void {
     state.pageList = paylod.pageList;
+    state.status = paylod.status;
     state.currentComponentIndex = -1;
     state.currentPageIndex = 0;
+  },
+  UPDATE_STATUS(state: State, paylod: any): void {
+    state.status = paylod.status;
   },
   UPDATE_COMPONENT(state: State, paylod: any): void {
     state.pageList[paylod.pageIndex].componentList = paylod.componentList;
@@ -63,7 +71,6 @@ const mutations = {
     state.pageList[paylod.pageIndex].componentList[paylod.componentIndex] = paylod.component;
   },
   SELECT_COMPONENT(state: State, paylod: any): void {
-    console.log('paylod.componentIndex', paylod.componentIndex)
     state.currentComponentIndex = paylod.componentIndex;
     state.currentPageIndex = paylod.pageIndex;
   },
@@ -73,11 +80,17 @@ const mutations = {
   UPDATE_RESIZESCHEMA(state: State, paylod: any): void {
     state.resizeSchema = paylod.resizeSchema;
   },
+  INIT_CONTRACT_FIELD(state: State, paylod: any): void {
+    state.fieldList = paylod.fieldList;
+  },
 };
 
 const actions = {
   INIT_CONTRACT(context:any,paylod:any){
     context.commit('INIT_CONTRACT', paylod);
+  },
+  UPDATE_STATUS(context:any,paylod:any){
+    context.commit('UPDATE_STATUS', paylod);
   },
   UPDATE_COMPONENT(context:any,paylod:any){
     context.commit('UPDATE_COMPONENT', paylod);
@@ -93,6 +106,9 @@ const actions = {
   },
   UPDATE_RESIZESCHEMA(context:any,paylod:any): void {
     context.commit('UPDATE_RESIZESCHEMA', paylod);
+  },
+  INIT_CONTRACT_FIELD(context:any,paylod:any): void {
+    context.commit('INIT_CONTRACT_FIELD', paylod);
   },
 };
 

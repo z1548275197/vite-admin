@@ -3,6 +3,7 @@ import { useStore } from 'vuex';
 import classes from './index.module.scss';
 import classNames from 'classnames/bind';
 import { ComponentItem, MaterialTypeMap } from '@/store/types/contract';
+import { ArrowRightBold } from '@element-plus/icons-vue';
 import { fontSizeList, letterSpaceList, timeFormatList, lineHeightList } from './interface';
 
 const cx = classNames.bind(classes);
@@ -10,9 +11,28 @@ const cx = classNames.bind(classes);
 export default defineComponent({
   setup() {
     const store = useStore();
+    const state: any = reactive({
+      isShow: false,
+      currentKey: '',
+    })
     const currentComponent: ComputedRef<ComponentItem | null> = computed(() => {
       return store.getters.currentComponent;
     });
+    const fieldList: ComputedRef<any[]> = computed(() => {
+      return store.state.contract.fieldList;
+    });
+    const currentKeyName: ComputedRef<any> = computed(() => {
+      if (currentComponent.value?.relationKey && fieldList.value) {
+        state.currentKey = currentComponent.value?.relationKey || '';
+        return fieldList.value.map((v: any) => {
+          return v.list
+        }).flat().find((v: any) => v.relationKey === currentComponent.value?.relationKey).name;
+      } else {
+        return '不关联';
+      }
+    })
+
+
 
     const changePropertyHandle = (key: string, val: any) => {
       store.dispatch('EDIT_COMPONENT', {
@@ -23,6 +43,74 @@ export default defineComponent({
           [key]: val
         }
       })
+    }
+
+    const renderFieldList = () => {
+      return (
+        <el-dialog
+          vModel={state.isShow}
+          title="选择关联的字段"
+          width="70%"
+          close-on-click-modal={false}
+          close-on-press-escape={false}
+        >
+          {{
+            default: () => {
+              return (
+                <div class={cx('radioList')}>
+                  <div
+                    class={cx('radioBtn', { active: !state.currentKey })}
+                    onClick={() => {
+                      state.currentKey = ''
+                    }}
+                  >不关联</div>
+                  {
+                    fieldList.value.map((fieldItem: any) => {
+                      return (
+                        <div class={cx('radioGroup')}>
+                          <div class={cx('radioTitle')}>{fieldItem.name}</div>
+                          <div class={cx('radioBox')}>
+                            {
+                              fieldItem && fieldItem.list.map((keyItem: any) => {
+                                return (
+                                  <div
+                                    class={cx('radioBtn', { active: state.currentKey === keyItem.relationKey })}
+                                    key={keyItem.relationKey}
+                                    onClick={() => {
+                                      state.currentKey = keyItem.relationKey;
+                                    }}
+                                  >{keyItem.name}</div>
+                                )
+                              })
+                            }
+                          </div>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              )
+            },
+            footer: () => {
+              return (
+                <span>
+                  <el-button onClick={() => {
+                    state.isShow = false;
+                    state.currentKey = currentComponent.value?.relationKey || '';
+                  }}>取消</el-button>
+                  <el-button type="primary" onClick={() => {
+                    changePropertyHandle('relationKey', state.currentKey)
+                    state.isShow = false;
+                    state.currentKey = currentComponent.value?.relationKey || '';
+                  }}>
+                    确认
+                  </el-button>
+                </span>
+              )
+            }
+          }}
+        </el-dialog>
+      )
     }
 
     return () => {
@@ -64,6 +152,21 @@ export default defineComponent({
                       changePropertyHandle('placeholderTxt', val)
                     }}
                   ></el-input>
+                </div>
+              </div>
+            )
+          }
+
+          {
+            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE].includes(currentComponent.value.type) && (
+              <div class={cx('propertyItem')}>
+                <div class={cx('propertyName')}>关联字段:</div>
+                <div class={cx('propertyValue')}>
+                  <el-button size="small" class={cx('customBtn')} onClick={() => {
+                    state.isShow = true;
+                  }}>
+                    {currentKeyName.value}
+                  </el-button>
                 </div>
               </div>
             )
@@ -213,6 +316,7 @@ export default defineComponent({
               ></el-input>
             </div>
           </div>
+          {state.isShow && renderFieldList()}
         </div>
       )
     }
