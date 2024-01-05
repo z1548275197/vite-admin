@@ -21,7 +21,7 @@ export default defineComponent({
     const dataSource: any = computed(() => store.state.contract);
 
     // 获取页面尺寸
-    const getPageSize = () => {
+    const getPageSize = (imgUrl: any) => {
       return new Promise((resolve, reject) => {
         const img = new Image();
         img.onload = function () {
@@ -29,12 +29,12 @@ export default defineComponent({
           const height = img.height;
           resolve(width > height ? 'A3' : 'A4')
         };
-        img.src = 'https://fr-static.jiazhengye.cn/658551d686dad-1.bb60bcc151c2fafd.jpg'
+        img.src = imgUrl;
       })
     }
 
-    const initPage = async () => {
-      const res = await getPageSize();
+    const initPage = async (imgUrl: any) => {
+      const res = await getPageSize(imgUrl);
       store.dispatch('UPDATE_SPECIFICATION', {
         specification: res
       })
@@ -59,7 +59,8 @@ export default defineComponent({
         store.dispatch('INIT_CONTRACT', {
           pageList: res.list,
           status: res.status
-        })
+        });
+        initPage(res.list[0].backgroundUrl)
       }
     }
 
@@ -78,14 +79,13 @@ export default defineComponent({
       if (dataSource.value.currentPageIndex !== focusPage) {
         store.dispatch('SELECT_COMPONENT', {
           componentIndex: -1,
-          pageIndex: focusPage
+          pageIndex: dataSource.value.pageList.length === focusPage ? dataSource.value.pageList.length - 1 : focusPage
         });
       }
     }, 500)
 
     onMounted(() => {
       bindEvent()
-      initPage();
       getFields();
       initData();
     })
