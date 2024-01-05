@@ -178,7 +178,7 @@ export default defineComponent({
           {
             state.typeList.map((item: any) => {
               return (
-                <div class={classes.typeBox} draggable ondragstart={(event: any) => startDragUtil(event, item)}>
+                <div class={classes.typeBox} draggable onDragstart={(event: any) => startDragUtil(event, item)}>
                   <div class={classes.typeName}>{item.name}</div>
                 </div>
               )
@@ -193,7 +193,7 @@ export default defineComponent({
     // 画布渲染
     const renderCanvas = () => {
       return (
-        <div id='canvas' class={classes.canvasContent} ondrop={handleDrop} ondragover={handleDragOver} onClick={() => {
+        <div id='canvas' class={classes.canvasContent} onDrop={handleDrop} onDragover={handleDragOver} onClick={() => {
           state.currentComponentIndex = -1
         }}>
           {/* 背景图 */}
@@ -211,7 +211,7 @@ export default defineComponent({
                     e.stopPropagation();
                     state.currentComponentIndex = index;
                   }}
-                  ondragstart={(e: any) => {
+                  onDragstart={(e: any) => {
                     startDragComponent(e, item);
                   }}
                 >
