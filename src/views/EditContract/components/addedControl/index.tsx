@@ -47,8 +47,11 @@ export default defineComponent({
     }
 
     const getKeyName = (key: any) => {
-      if (!key) return '未关联字段';
-      return fieldList.value.find((v: any) => v.relationKey === key).name;
+      if (key && fieldList.value) {
+        return fieldList.value.find((v: any) => v.relationKey === key).name;
+      } else {
+        return '未关联字段'
+      }
     }
 
     return () => {

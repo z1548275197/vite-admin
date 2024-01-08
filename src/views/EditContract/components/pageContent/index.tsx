@@ -26,7 +26,7 @@ const componentMap: any = {
     relationKey: ''
   },
   [MaterialTypeMap.CHECKBOX]: {
-    value: 'false',
+    value: false,
     width: 30,
     height: 30,
     componentName: '复选框',
