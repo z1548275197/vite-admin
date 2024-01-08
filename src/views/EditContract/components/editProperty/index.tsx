@@ -297,7 +297,7 @@ export default defineComponent({
                 min={0}
                 modelValue={currentComponent.value.x}
                 onInput={(val: any) => {
-                  changePropertyHandle('x', val || 0)
+                  changePropertyHandle('x', Number(val) || 0)
                 }}
               ></el-input>
               &nbsp;
@@ -311,7 +311,7 @@ export default defineComponent({
                 min={0}
                 modelValue={currentComponent.value.y}
                 onInput={(val: any) => {
-                  changePropertyHandle('y', val)
+                  changePropertyHandle('y', Number(val) || 0)
                 }}
               ></el-input>
             </div>

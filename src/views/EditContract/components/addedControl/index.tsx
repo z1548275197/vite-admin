@@ -31,8 +31,9 @@ export default defineComponent({
         componentIndex,
         pageIndex: currentPageIndex.value
       })
+      console.log(item.y, 'item.y + currentPageIndex.value * 1131')
       document.getElementById('mainContainer')?.scrollTo({
-        top: item.y + currentPageIndex.value * 1131,
+        top: Number(item.y) + currentPageIndex.value * 1131,
         left: item.x,
         behavior: 'smooth' // 添加平滑滚动效果
       });
@@ -47,7 +48,7 @@ export default defineComponent({
     }
 
     const getKeyName = (key: any) => {
-      if (key && fieldList.value) {
+      if (key && fieldList.value.length) {
         return fieldList.value.find((v: any) => v.relationKey === key).name;
       } else {
         return '未关联字段'

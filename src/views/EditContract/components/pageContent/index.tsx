@@ -60,6 +60,7 @@ export default defineComponent({
     const currentComponentIndex: ComputedRef<number> = computed(() => store.state.contract.currentComponentIndex);
     const specification: ComputedRef<'A3' | 'A4'> = computed(() => store.state.contract.specification);
     const resizeSchema: ComputedRef<1 | 2> = computed(() => store.state.contract.resizeSchema);
+    const currentPageIndex: ComputedRef<number> = computed(() => store.state.contract.currentPageIndex);
 
     // 拖拽进入画布后，增加组件
     const addComponent = (type: any, x: any, y: any) => {
@@ -360,7 +361,7 @@ export default defineComponent({
             pageData.value.componentList.map((item: ComponentItem, index: number) => {
               return <div
                 id={item.id + ''}
-                class={cx('dragItem', { active: index === currentComponentIndex.value })}
+                class={cx('dragItem', { active: index === currentComponentIndex.value && props.pageIndex === currentPageIndex.value })}
                 style={{
                   left: item.x + 'px',
                   top: item.y + 'px',
@@ -387,44 +388,75 @@ export default defineComponent({
                 }}
               >
                 {
-                  (index === currentComponentIndex.value && resizeSchema.value === 1) && (
+                  (
+                    index === currentComponentIndex.value &&
+                    resizeSchema.value === 1 &&
+                    props.pageIndex === currentPageIndex.value
+                  ) && (
                     <div class={cx('leftTopPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'leftTop')}></div>
                   )
                 }
                 {
-                  (index === currentComponentIndex.value && resizeSchema.value === 1) && (
+                  (
+                    index === currentComponentIndex.value &&
+                    resizeSchema.value === 1 &&
+                    props.pageIndex === currentPageIndex.value
+                  ) && (
                     <div class={cx('leftBottomPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'leftBottom')}></div>
                   )
                 }
                 {
-                  (index === currentComponentIndex.value && resizeSchema.value === 1) && (
+                  (
+                    index === currentComponentIndex.value &&
+                    resizeSchema.value === 1 &&
+                    props.pageIndex === currentPageIndex.value
+                  ) && (
                     <div class={cx('rightBottomPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'rightBottom')}></div>
                   )
                 }
 
                 {
-                  (index === currentComponentIndex.value && resizeSchema.value === 2) && (
+                  (
+                    index === currentComponentIndex.value &&
+                    resizeSchema.value === 2 &&
+                    props.pageIndex === currentPageIndex.value
+                  ) && (
                     <div class={cx('leftPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'left')}></div>
                   )
                 }
                 {
-                  (index === currentComponentIndex.value && resizeSchema.value === 2) && (
+                  (
+                    index === currentComponentIndex.value &&
+                    resizeSchema.value === 2 &&
+                    props.pageIndex === currentPageIndex.value
+                  ) && (
                     <div class={cx('rightPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'right')}></div>
                   )
                 }
                 {
-                  (index === currentComponentIndex.value && resizeSchema.value === 2) && (
+                  (
+                    index === currentComponentIndex.value &&
+                    resizeSchema.value === 2 &&
+                    props.pageIndex === currentPageIndex.value
+                  ) && (
                     <div class={cx('topPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'top')}></div>
                   )
                 }
                 {
-                  (index === currentComponentIndex.value && resizeSchema.value === 2) && (
+                  (
+                    index === currentComponentIndex.value &&
+                    resizeSchema.value === 2 &&
+                    props.pageIndex === currentPageIndex.value
+                  ) && (
                     <div class={cx('bottomPoint', 'point')} onMousedown={(e: any) => startResize(e, index, 'bottom')}></div>
                   )
                 }
 
                 {
-                  index === currentComponentIndex.value && (
+                  (
+                    index === currentComponentIndex.value &&
+                    props.pageIndex === currentPageIndex.value
+                  ) && (
                     <el-icon
                       class={cx('rightTopBtn')}
                       onMousedown={(e: any) => {
