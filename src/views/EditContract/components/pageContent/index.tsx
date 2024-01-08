@@ -36,6 +36,7 @@ const componentMap: any = {
     value: '',
     width: 150,
     height: 30,
+    placeholderTxt: '',
     timeFormatType: 'DD/MM/YYYY',
     componentName: '填写日期',
     relationKey: ''
