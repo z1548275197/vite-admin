@@ -20,6 +20,11 @@ export default defineComponent({
     const materialList: ComputedRef<MaterialItem[]> = computed(() => store.state.contract.materialList);
     const currentComponentIndex: ComputedRef<number> = computed(() => store.state.contract.currentComponentIndex);
     const currentPageIndex: ComputedRef<number> = computed(() => store.state.contract.currentPageIndex);
+    const fieldList: ComputedRef<any[]> = computed(() => {
+      return store.state.contract.fieldList.map((v: any) => {
+        return v.list
+      }).flat();
+    });
 
     const selectComponent = (item: ComponentItem, componentIndex: number) => {
       store.dispatch('SELECT_COMPONENT', {
@@ -39,6 +44,11 @@ export default defineComponent({
       });
       if (findItem) return findItem.icon;
       return '';
+    }
+
+    const getKeyName = (key: any) => {
+      if (!key) return '未关联字段';
+      return fieldList.value.find((v: any) => v.relationKey === key).name;
     }
 
     return () => {
@@ -64,7 +74,7 @@ export default defineComponent({
                     {item.componentName || item.type}
                   </div>
                   <div class={cx('tip')}>
-                    雇主姓名
+                    {getKeyName(item.relationKey)}
                   </div>
                 </div>
               )
