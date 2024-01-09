@@ -7,7 +7,7 @@ export const letterSpaceList = [
 ]
 
 export const timeFormatList = [
-  'DD/MM/YYYY', 'DD', 'MM', 'YY'
+  'DD/MM/YYYY', 'DD', 'MM', 'YYYY'
 ]
 
 export const lineHeightList = [

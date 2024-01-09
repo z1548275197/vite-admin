@@ -336,12 +336,12 @@ export default defineComponent({
 
       if (item.type === MaterialTypeMap.CHECKBOX) {
         return (
-          <el-checkbox style={{ marginLeft: '7px', marginTop: '6px' }} model-value={item.value}></el-checkbox>
+          <el-checkbox style={{ marginLeft: '4px', marginTop: '4px' }} model-value={item.value}></el-checkbox>
         )
       }
       if (item.type === MaterialTypeMap.DATE) {
         return (
-          <div class={cx('singleLine')}>{item.value || item.timeFormatType}</div>
+          <div class={cx('singleLine')}>{item.value || item.placeholderTxt || item.timeFormatType}</div>
         )
       }
 

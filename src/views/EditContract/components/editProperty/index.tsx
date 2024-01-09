@@ -74,9 +74,14 @@ export default defineComponent({
                               fieldItem && fieldItem.list.map((keyItem: any) => {
                                 return (
                                   <div
-                                    class={cx('radioBtn', { active: state.currentKey === keyItem.relationKey })}
+                                    class={cx(
+                                      'radioBtn', {
+                                      active: state.currentKey === keyItem.relationKey,
+                                      disabled: !keyItem.component_type.includes(currentComponent.value?.type)
+                                    })}
                                     key={keyItem.relationKey}
                                     onClick={() => {
+                                      if (!keyItem.component_type.includes(currentComponent.value?.type)) return;
                                       state.currentKey = keyItem.relationKey;
                                     }}
                                   >{keyItem.name}</div>
@@ -181,7 +186,7 @@ export default defineComponent({
                     size="small"
                     style={{ width: '80%' }}
                     clearable
-                    modelValue={currentComponent.value.fontSize || 16}
+                    modelValue={currentComponent.value.fontSize || 14}
                     placeholder="请选择字号"
                     onChange={(val: any) => {
                       changePropertyHandle('fontSize', val)

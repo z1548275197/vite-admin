@@ -32,7 +32,7 @@ const state: State = {
     {
       type: 3,
       name: '填写日期',
-      icon: 'https://fr-static.jiazhengye.cn/rili.59af711857f188c9.png' 
+      icon: 'https://fr-static.jiazhengye.cn/rili.59af711857f188c9.png'
     },
   ],         // 素材工具栏列表
   currentPageIndex: 0,      // 当前选择的页面索引
@@ -49,7 +49,7 @@ const getters = {
   currentComponent(state: State, getters: any) {
     if (getters.currentPageData && state.currentComponentIndex > -1) {
       return getters.currentPageData.componentList[state.currentComponentIndex];
-    } 
+    }
     return null;
   }
 };
@@ -86,28 +86,28 @@ const mutations = {
 };
 
 const actions = {
-  INIT_CONTRACT(context:any,paylod:any){
+  INIT_CONTRACT(context: any, paylod: any) {
     context.commit('INIT_CONTRACT', paylod);
   },
-  UPDATE_STATUS(context:any,paylod:any){
+  UPDATE_STATUS(context: any, paylod: any) {
     context.commit('UPDATE_STATUS', paylod);
   },
-  UPDATE_COMPONENT(context:any,paylod:any){
+  UPDATE_COMPONENT(context: any, paylod: any) {
     context.commit('UPDATE_COMPONENT', paylod);
   },
   EDIT_COMPONENT(context: any, paylod: any) {
     context.commit('EDIT_COMPONENT', paylod);
   },
-  SELECT_COMPONENT(context:any,paylod:any): void {
+  SELECT_COMPONENT(context: any, paylod: any): void {
     context.commit('SELECT_COMPONENT', paylod);
   },
-  UPDATE_SPECIFICATION(context:any,paylod:any): void {
+  UPDATE_SPECIFICATION(context: any, paylod: any): void {
     context.commit('UPDATE_SPECIFICATION', paylod);
   },
-  UPDATE_RESIZESCHEMA(context:any,paylod:any): void {
+  UPDATE_RESIZESCHEMA(context: any, paylod: any): void {
     context.commit('UPDATE_RESIZESCHEMA', paylod);
   },
-  INIT_CONTRACT_FIELD(context:any,paylod:any): void {
+  INIT_CONTRACT_FIELD(context: any, paylod: any): void {
     context.commit('INIT_CONTRACT_FIELD', paylod);
   },
 };

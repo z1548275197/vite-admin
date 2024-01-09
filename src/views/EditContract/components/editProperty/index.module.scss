@@ -2,73 +2,85 @@
   font-size: 14px;
   padding-left: 16px;
   padding-top: 32px;
+
   .title {
     font-weight: bold;
     margin-bottom: 16px;
     // margin-left: 16px;
   }
+
   .propertyItem {
     line-height: 24px;
     margin-bottom: 12px;
     font-size: 12px;
+
     .propertyName {
       margin-bottom: 6px;
     }
+
     .propertyValue {
       .numInput {
         :global(.el-input__inner) {
           padding: 0 5px;
         }
       }
+
       .customBtn {
         width: 80%;
         display: flex;
         align-items: center;
-        
+
       }
     }
   }
 
-    .radioList {
-      color: #000;
-  
-      .radioBtn {
-        border: 1px solid #9fa0a2;
-        width: 18%;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        word-break: keep-all;
-        text-align: center;
-        font-size: 14px;
-        line-height: 16px;
-        margin-right: 10px;
-        margin-bottom: 10px;
-        border-radius: 4px;
-  
-        &.active {
-          background-color: #419eff;
-          border: 1px solid #419eff;
-          color: #fff;
-        }
+  .radioList {
+    color: #000;
+
+    .radioBtn {
+      border: 1px solid #9fa0a2;
+      width: 18%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      word-break: keep-all;
+      text-align: center;
+      font-size: 14px;
+      line-height: 16px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+
+      &.active {
+        background-color: #419eff;
+        border: 1px solid #419eff;
+        color: #fff;
       }
-  
-      .radioGroup {
-        .radioTitle {
-          margin-top: 10px;
-          font-size: 14px;
-          font-weight: bold;
-        }
-  
-        .radioBox {
-          margin-top: 10px;
-          display: flex;
-          flex-wrap: wrap;
-        }
+
+      &.disabled {
+        background-color: #eeeeee;
+        border: 1px solid #ccc;
+        color: #aaa;
+        cursor: not-allowed;
       }
     }
+
+    .radioGroup {
+      .radioTitle {
+        margin-top: 10px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .radioBox {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+  }
 }
 
 :global(.el-dialog__body) {

@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, reactive, ref, computed } from 'vue';
+import { defineComponent, onMounted, reactive, ComputedRef, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { debounce } from 'lodash';
@@ -11,6 +11,7 @@ import PageContent from './components/pageContent';
 import AddedControl from './components/addedControl';
 import EditProperty from './components/editProperty';
 import Pagination from './components/pagination';
+import { ComponentItem } from '@/store/types/contract';
 
 const cx = classNames.bind(classes);
 
@@ -19,6 +20,15 @@ export default defineComponent({
     const router = useRouter();
     const store = useStore();
     const dataSource: any = computed(() => store.state.contract);
+    const currentComponent: ComputedRef<ComponentItem | null> = computed(() => {
+      return store.getters.currentComponent;
+    });
+    const componentList: ComputedRef<ComponentItem[]> = computed(() => {
+      if (store.getters.currentPageData) {
+        return store.getters.currentPageData.componentList
+      }
+      return []
+    });
 
     // 获取页面尺寸
     const getPageSize = (imgUrl: any) => {
@@ -47,6 +57,23 @@ export default defineComponent({
           store.dispatch('UPDATE_RESIZESCHEMA', {
             resizeSchema: dataSource.value.resizeSchema === 1 ? 2 : 1
           })
+        }
+        if ((event.shiftKey && event.key === 'C') || (event.shiftKey && event.code === 'KeyC')) {
+          console.log('Shift + C 被按下');
+          if (currentComponent.value) {
+            store.dispatch('UPDATE_COMPONENT', {
+              pageIndex: dataSource.value.currentPageIndex,
+              componentList: [
+                ...componentList.value,
+                {
+                  ...currentComponent.value,
+                  x: currentComponent.value.x + 50,
+                  y: currentComponent.value.y + 50,
+                  id: new Date().getTime()
+                }
+              ]
+            });
+          }
         }
       });
     }

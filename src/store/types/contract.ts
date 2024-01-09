@@ -8,7 +8,7 @@ export const MaterialTypeMap = {
 }
 
 
-type TimeFormatType = 'DD/MM/YYYY' | 'DD' | 'MM' | 'YY';
+type TimeFormatType = 'DD/MM/YYYY' | 'DD' | 'MM' | 'YYYY';
 
 export interface ComponentItem {
   id: number;
