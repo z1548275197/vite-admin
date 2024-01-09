@@ -75,7 +75,7 @@ export default defineComponent({
 
     const debouncedScroll = debounce(() => {
       const ele: any = document.getElementById('mainContainer');
-      const focusPage = Math.floor(ele.scrollTop / 900);
+      const focusPage = Math.floor(ele.scrollTop / 1152);
       if (dataSource.value.currentPageIndex !== focusPage) {
         store.dispatch('SELECT_COMPONENT', {
           componentIndex: -1,
