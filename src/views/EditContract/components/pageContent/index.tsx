@@ -12,7 +12,7 @@ const componentMap: any = {
   [MaterialTypeMap.SINGLE_LINE]: {
     value: '',
     width: 150,
-    height: 30,
+    height: 24,
     placeholderTxt: '请输入单行文本',
     componentName: '单行文本',
     relationKey: ''
@@ -27,15 +27,15 @@ const componentMap: any = {
   },
   [MaterialTypeMap.CHECKBOX]: {
     value: 'false',
-    width: 30,
-    height: 30,
+    width: 24,
+    height: 24,
     componentName: '复选框',
     relationKey: ''
   },
   [MaterialTypeMap.DATE]: {
     value: '',
     width: 150,
-    height: 30,
+    height: 24,
     placeholderTxt: '',
     timeFormatType: 'DD/MM/YYYY',
     componentName: '填写日期',
@@ -368,7 +368,7 @@ export default defineComponent({
                   width: item.width + 'px',
                   height: item.height + 'px',
                   color: item.value ? '#000' : '#bebebe',
-                  fontSize: `${item.fontSize || 16}px`,
+                  fontSize: `${item.fontSize || 14}px`,
                   letterSpacing: item.letterSpace + 'px',
                   opacity: state.victuryItem && state.victuryItem.id === item.id ? 0 : 1
                 }}
