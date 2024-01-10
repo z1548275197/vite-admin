@@ -488,7 +488,7 @@ export default defineComponent({
                   width: state.victuryItem.width + 'px',
                   height: state.victuryItem.height + 'px',
                   color: state.victuryItem.value ? '#000' : '#bebebe',
-                  fontSize: `${state.victuryItem.fontSize || 16}px`,
+                  fontSize: `${state.victuryItem.fontSize || 14}px`,
                   letterSpacing: state.victuryItem.letterSpace + 'px'
                 }}
               >
