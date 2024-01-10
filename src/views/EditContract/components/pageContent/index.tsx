@@ -40,7 +40,16 @@ const componentMap: any = {
     timeFormatType: 'DD/MM/YYYY',
     componentName: '填写日期',
     relationKey: ''
-  }
+  },
+  [MaterialTypeMap.SELECT]: {
+    value: '',
+    width: 150,
+    height: 24,
+    placeholderTxt: '请选择内容',
+    componentName: '选择框',
+    relationKey: '',
+    options: []
+  },
 }
 
 export default defineComponent({
@@ -344,7 +353,11 @@ export default defineComponent({
           <div class={cx('singleLine')}>{item.value || item.placeholderTxt || item.timeFormatType}</div>
         )
       }
-
+      if (item.type === MaterialTypeMap.SELECT) {
+        return (
+          <div class={cx('singleLine')}>{item.value || item.placeholderTxt}</div>
+        )
+      }
     }
 
     return () => {

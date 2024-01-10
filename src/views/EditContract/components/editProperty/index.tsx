@@ -142,7 +142,7 @@ export default defineComponent({
           </div>
 
           {
-            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE].includes(currentComponent.value.type) && (
+            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE, MaterialTypeMap.SELECT].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>提示文案:</div>
                 <div class={cx('propertyValue')}>
@@ -163,7 +163,7 @@ export default defineComponent({
           }
 
           {
-            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE].includes(currentComponent.value.type) && (
+            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE, MaterialTypeMap.SELECT].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>关联字段:</div>
                 <div class={cx('propertyValue')}>
@@ -178,7 +178,7 @@ export default defineComponent({
           }
 
           {
-            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE].includes(currentComponent.value.type) && (
+            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE, MaterialTypeMap.SELECT].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>字号:</div>
                 <div class={cx('propertyValue')}>
@@ -206,7 +206,7 @@ export default defineComponent({
           }
 
           {
-            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE].includes(currentComponent.value.type) && (
+            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE, MaterialTypeMap.SELECT].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>横向间距:</div>
                 <div class={cx('propertyValue')}>

@@ -34,6 +34,11 @@ const state: State = {
       name: '填写日期',
       icon: 'https://fr-static.jiazhengye.cn/rili.59af711857f188c9.png'
     },
+    {
+      type: 7,
+      name: '选择框',
+      icon: 'https://fr-static.jiazhengye.cn/select.afb70f3bdaf4e2a9.png'
+    },
   ],         // 素材工具栏列表
   currentPageIndex: 0,      // 当前选择的页面索引
   currentComponentIndex: -1, // 当前选择的组件索引
