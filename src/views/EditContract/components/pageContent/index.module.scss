@@ -8,9 +8,28 @@
   margin-bottom: 20px;
   overflow: hidden;
 
-  &.a3Page {
+  &.a3PageLand {
     min-width: 1600.66px;
     width: 1600.66px;
+    height: 1132.66px;
+  }
+
+  &.a4PageLand {
+    min-width: 1132.66px;
+    width: 1132.66px;
+    height: 800.33px;
+  }
+
+  &.a3PagePort {
+    min-width: 1132.66px;
+    width: 1132.66px;
+    height: 1600.66px;
+  }
+
+  &.a4PagePort {
+    min-width: 800.33px;
+    width: 800.33px;
+    height: 1132.66px;
   }
 
   .backUrl {

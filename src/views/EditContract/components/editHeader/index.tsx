@@ -46,6 +46,16 @@ export default defineComponent({
       }
     }
 
+    const getBtnTxt = (val: any) => {
+      const txtMap: any = {
+        '1': 'A3 横向',
+        '2': 'A4 横向',
+        '3': 'A3 直向',
+        '4': 'A4 直向',
+      }
+      return txtMap[val];
+    }
+
     return () => {
       return (
         <div class={cx('headerContainer')}>
@@ -68,7 +78,7 @@ export default defineComponent({
           </div>
           <div class={cx('btnBox')}>
             <el-button class={cx('btn')}>
-              规格: {store.state.contract.specification}
+              规格:  {getBtnTxt(store.state.contract.specification)}
             </el-button>
             <el-dropdown
               size="large"

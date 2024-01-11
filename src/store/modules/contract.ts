@@ -5,7 +5,7 @@ interface State {
   materialList: MaterialItem[],
   currentPageIndex: number;
   currentComponentIndex: number;
-  specification: 'A3' | 'A4';
+  specification: '1' | '2' | '3' | '4';
   resizeSchema: 1 | 2;
   status: 1 | 2 | 0;
   fieldList: any[];
@@ -42,7 +42,7 @@ const state: State = {
   ],         // 素材工具栏列表
   currentPageIndex: 0,      // 当前选择的页面索引
   currentComponentIndex: -1, // 当前选择的组件索引
-  specification: 'A4', // 纸张规格
+  specification: '1', // 纸张规格
   resizeSchema: 1,  // 拖拽尺寸模式
   status: 1,
   fieldList: []

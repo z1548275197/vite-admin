@@ -67,7 +67,7 @@ export default defineComponent({
 
     const pageData: ComputedRef<PageItem> = computed(() => store.state.contract.pageList[props.pageIndex]);
     const currentComponentIndex: ComputedRef<number> = computed(() => store.state.contract.currentComponentIndex);
-    const specification: ComputedRef<'A3' | 'A4'> = computed(() => store.state.contract.specification);
+    const specification: ComputedRef<any> = computed(() => store.state.contract.specification);
     const resizeSchema: ComputedRef<1 | 2> = computed(() => store.state.contract.resizeSchema);
     const currentPageIndex: ComputedRef<number> = computed(() => store.state.contract.currentPageIndex);
 
@@ -325,6 +325,16 @@ export default defineComponent({
       })
     }
 
+    const getPageClass = (val: any) => {
+      const txtMap: any = {
+        '1': 'a3PageLand',
+        '2': 'a4PageLand',
+        '3': 'a3PagePort',
+        '4': 'a4PagePort',
+      }
+      return txtMap[val];
+    }
+
     const renderComponent = (item: ComponentItem) => {
       if (item.type === MaterialTypeMap.SINGLE_LINE) {
         return (
@@ -364,7 +374,7 @@ export default defineComponent({
       return (
         <div
           id={'contractCanvas' + props.pageIndex}
-          class={cx('canvasContent', { a3Page: specification.value === 'A3' })}
+          class={cx('canvasContent', getPageClass(specification.value))}
           onDrop={handleDrop}
           onDragover={handleDragOver}
         >

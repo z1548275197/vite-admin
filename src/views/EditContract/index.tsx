@@ -87,7 +87,9 @@ export default defineComponent({
           pageList: res.list,
           status: res.status
         });
-        initPage(res.list[0].backgroundUrl)
+        store.dispatch('UPDATE_SPECIFICATION', {
+          specification: res.format
+        });
       }
     }
 
