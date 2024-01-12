@@ -1,1 +1,3 @@
-VITE_BASE_API = 'http://127.0.0.1:7002'
+VITE_ENV = 'pro'
+VITE_OUTPUT_DIR = 'pro'
+VITE_BASE_API = 'https://bmadmin.bluestarm.com/'
