@@ -36,7 +36,7 @@ export default defineComponent({
         contract_template_uuid: router.currentRoute.value.query.contract_template_uuid,
         template_page_data: JSON.stringify(store.state.contract.pageList),
         status: pageStatus.value,
-        is_delete: pageStatus.value === 0 ? 1 : 0
+        is_delete: pageStatus.value == 0 ? 1 : 0
       });
       if (res) {
         ElMessage.success('保存成功');
