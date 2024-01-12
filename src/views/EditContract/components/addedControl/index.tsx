@@ -77,7 +77,7 @@ export default defineComponent({
                     <img class={cx('iconImg')} src={getIcon(item.type)} alt="" />
                     {item.componentName || item.type}
                   </div>
-                  <div class={cx('tip')}>
+                  <div class={cx('tip', { relaed: !item.relationKey })}>
                     {getKeyName(item.relationKey)}
                   </div>
                 </div>

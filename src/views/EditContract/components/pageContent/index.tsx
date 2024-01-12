@@ -13,7 +13,7 @@ const componentMap: any = {
     value: '',
     width: 150,
     height: 24,
-    placeholderTxt: '请输入单行文本',
+    placeholderTxt: 'Please Input',
     componentName: '单行文本',
     relationKey: ''
   },
@@ -21,7 +21,7 @@ const componentMap: any = {
     value: '',
     width: 150,
     height: 60,
-    placeholderTxt: '请输入多行文本',
+    placeholderTxt: 'Please Input',
     componentName: '多行文本',
     relationKey: ''
   },
@@ -36,7 +36,7 @@ const componentMap: any = {
     value: '',
     width: 150,
     height: 24,
-    placeholderTxt: '',
+    placeholderTxt: 'Date',
     timeFormatType: 'DD/MM/YYYY',
     componentName: '填写日期',
     relationKey: ''
@@ -45,7 +45,7 @@ const componentMap: any = {
     value: '',
     width: 150,
     height: 24,
-    placeholderTxt: '请选择内容',
+    placeholderTxt: 'Please Select',
     componentName: '选择框',
     relationKey: '',
     options: []
@@ -360,7 +360,7 @@ export default defineComponent({
       }
       if (item.type === MaterialTypeMap.DATE) {
         return (
-          <div class={cx('singleLine')}>{item.value || item.placeholderTxt || item.timeFormatType}</div>
+          <div class={cx('singleLine')}>{item.value || item.placeholderTxt}</div>
         )
       }
       if (item.type === MaterialTypeMap.SELECT) {

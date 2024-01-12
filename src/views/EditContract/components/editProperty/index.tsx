@@ -14,6 +14,7 @@ export default defineComponent({
     const state: any = reactive({
       isShow: false,
       currentKey: '',
+      currentKeyFullName: '',
     })
     const currentComponent: ComputedRef<ComponentItem | null> = computed(() => {
       return store.getters.currentComponent;
@@ -32,7 +33,15 @@ export default defineComponent({
       }
     })
 
-
+    const getDatePlaceTxt = (type: any) => {
+      const dateMap: any = {
+        'DD/MM/YYYY': 'Date',
+        'DD': 'Day',
+        'MM': 'Month',
+        'YYYY': 'Year'
+      }
+      return dateMap[type]
+    }
 
     const changePropertyHandle = (key: string, val: any) => {
       store.dispatch('EDIT_COMPONENT', {
@@ -83,6 +92,7 @@ export default defineComponent({
                                     onClick={() => {
                                       if (!keyItem.component_type.includes(currentComponent.value?.type)) return;
                                       state.currentKey = keyItem.relationKey;
+                                      state.currentKeyFullName = keyItem.full_name;
                                     }}
                                   >{keyItem.name}</div>
                                 )
@@ -104,9 +114,10 @@ export default defineComponent({
                     state.currentKey = currentComponent.value?.relationKey || '';
                   }}>取消</el-button>
                   <el-button type="primary" onClick={() => {
-                    changePropertyHandle('relationKey', state.currentKey)
+                    changePropertyHandle('relationKey', state.currentKey);
                     state.isShow = false;
                     state.currentKey = currentComponent.value?.relationKey || '';
+                    changePropertyHandle('componentName', state.currentKeyFullName);
                   }}>
                     确认
                   </el-button>
@@ -161,6 +172,27 @@ export default defineComponent({
               </div>
             )
           }
+
+          {/* {
+            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE].includes(currentComponent.value.type) && (
+              <div class={cx('propertyItem')}>
+                <div class={cx('propertyName')}>默认值:</div>
+                <div class={cx('propertyValue')}>
+                  <el-input
+                    size="small"
+                    style={{ width: '80%' }}
+                    clearable
+                    modelValue={currentComponent.value.value}
+                    placeholder="请输入默认值"
+                    maxlength={30}
+                    onInput={(val: any) => {
+                      changePropertyHandle('value', val)
+                    }}
+                  ></el-input>
+                </div>
+              </div>
+            )
+          } */}
 
           {
             [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE, MaterialTypeMap.SELECT].includes(currentComponent.value.type) && (
@@ -273,7 +305,8 @@ export default defineComponent({
                     modelValue={currentComponent.value.timeFormatType}
                     placeholder="请选择日期格式"
                     onChange={(val: any) => {
-                      changePropertyHandle('timeFormatType', val)
+                      changePropertyHandle('timeFormatType', val);
+                      changePropertyHandle('placeholderTxt', getDatePlaceTxt(val));
                     }}
                   >
                     {
