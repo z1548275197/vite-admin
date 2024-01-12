@@ -14,7 +14,7 @@ const componentMap: any = {
     width: 150,
     height: 24,
     placeholderTxt: 'Please Input',
-    componentName: '单行文本',
+    componentName: '內容 Input',
     relationKey: ''
   },
   [MaterialTypeMap.MORE_LINE]: {
@@ -22,14 +22,14 @@ const componentMap: any = {
     width: 150,
     height: 60,
     placeholderTxt: 'Please Input',
-    componentName: '多行文本',
+    componentName: '內容 Input',
     relationKey: ''
   },
   [MaterialTypeMap.CHECKBOX]: {
     value: 'false',
     width: 24,
     height: 24,
-    componentName: '复选框',
+    componentName: '選項框 Checkbox',
     relationKey: ''
   },
   [MaterialTypeMap.DATE]: {
@@ -38,7 +38,7 @@ const componentMap: any = {
     height: 24,
     placeholderTxt: 'Date',
     timeFormatType: 'DD/MM/YYYY',
-    componentName: '填写日期',
+    componentName: '日期 Date',
     relationKey: ''
   },
   [MaterialTypeMap.SELECT]: {
@@ -46,7 +46,7 @@ const componentMap: any = {
     width: 150,
     height: 24,
     placeholderTxt: 'Please Select',
-    componentName: '选择框',
+    componentName: '選項 Option',
     relationKey: '',
     options: []
   },

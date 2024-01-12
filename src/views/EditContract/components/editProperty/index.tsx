@@ -173,7 +173,7 @@ export default defineComponent({
             )
           }
 
-          {/* {
+          {
             [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>默认值:</div>
@@ -192,7 +192,7 @@ export default defineComponent({
                 </div>
               </div>
             )
-          } */}
+          }
 
           {
             [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE, MaterialTypeMap.SELECT].includes(currentComponent.value.type) && (
