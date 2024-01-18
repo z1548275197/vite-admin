@@ -39,6 +39,11 @@ const state: State = {
       name: '选择框',
       icon: 'https://fr-static.jiazhengye.cn/select.afb70f3bdaf4e2a9.png'
     },
+    {
+      type: 8,
+      name: '图片',
+      icon: 'https://fr-static.jiazhengye.cn/image.8ea0e1074ab6f6a2.png'
+    },
   ],         // 素材工具栏列表
   currentPageIndex: 0,      // 当前选择的页面索引
   currentComponentIndex: -1, // 当前选择的组件索引

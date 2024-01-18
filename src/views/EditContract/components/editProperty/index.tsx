@@ -4,7 +4,7 @@ import classes from './index.module.scss';
 import classNames from 'classnames/bind';
 import { ComponentItem, MaterialTypeMap } from '@/store/types/contract';
 import { ArrowRightBold } from '@element-plus/icons-vue';
-import { fontSizeList, letterSpaceList, timeFormatList, lineHeightList } from './interface';
+import { fontSizeList, letterSpaceList, timeFormatList, lineHeightList, alignList, zoomList } from './interface';
 
 const cx = classNames.bind(classes);
 
@@ -195,7 +195,36 @@ export default defineComponent({
           }
 
           {
-            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE, MaterialTypeMap.SELECT].includes(currentComponent.value.type) && (
+            [
+              MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.CHECKBOX,
+              MaterialTypeMap.DATE, MaterialTypeMap.SELECT
+            ].includes(currentComponent.value.type) && (
+              <div class={cx('propertyItem')}>
+                <div class={cx('propertyName')}>是否可编辑:</div>
+                <div class={cx('propertyValue')}>
+                  <el-select
+                    size="small"
+                    style={{ width: '80%' }}
+                    clearable
+                    modelValue={currentComponent.value.disabled}
+                    placeholder="是否可编辑"
+                    onChange={(val: any) => {
+                      changePropertyHandle('disabled', val)
+                    }}
+                  >
+                    <el-option label="是" value={false}></el-option>
+                    <el-option label="否" value={true}></el-option>
+                  </el-select>
+                </div>
+              </div>
+            )
+          }
+
+          {
+            [
+              MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE,
+              MaterialTypeMap.SELECT, MaterialTypeMap.IMAGE
+            ].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>关联字段:</div>
                 <div class={cx('propertyValue')}>
@@ -284,6 +313,67 @@ export default defineComponent({
                       lineHeightList.map((item: any) => {
                         return (
                           <el-option key={item} label={item} value={item}></el-option>
+                        )
+                      })
+                    }
+                  </el-select>
+                </div>
+              </div>
+            )
+          }
+
+          {
+            [
+              MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE,
+              MaterialTypeMap.IMAGE, MaterialTypeMap.SELECT
+            ].includes(currentComponent.value.type) && (
+              <div class={cx('propertyItem')}>
+                <div class={cx('propertyName')}>对齐方式:</div>
+                <div class={cx('propertyValue')}>
+                  <el-select
+                    size="small"
+                    style={{ width: '80%' }}
+                    clearable
+                    modelValue={currentComponent.value.align || 'left'}
+                    placeholder="请选择对齐方式"
+                    onChange={(val: any) => {
+                      changePropertyHandle('align', val)
+                    }}
+                  >
+                    {
+                      alignList.map((item: any) => {
+                        return (
+                          <el-option key={item.id} label={item.name} value={item.id}></el-option>
+                        )
+                      })
+                    }
+                  </el-select>
+                </div>
+              </div>
+            )
+          }
+
+          {
+            [
+              MaterialTypeMap.IMAGE
+            ].includes(currentComponent.value.type) && (
+              <div class={cx('propertyItem')}>
+                <div class={cx('propertyName')}>缩放方式:</div>
+                <div class={cx('propertyValue')}>
+                  <el-select
+                    size="small"
+                    style={{ width: '80%' }}
+                    clearable
+                    modelValue={currentComponent.value.zoom || 'fixWidth'}
+                    placeholder="请选择缩放方式"
+                    onChange={(val: any) => {
+                      changePropertyHandle('zoom', val)
+                    }}
+                  >
+                    {
+                      zoomList.map((item: any) => {
+                        return (
+                          <el-option key={item.id} label={item.name} value={item.id}></el-option>
                         )
                       })
                     }

@@ -13,3 +13,14 @@ export const timeFormatList = [
 export const lineHeightList = [
   1.1, 1.2, 1.3, 1.4, 1.5, 1.6
 ]
+
+export const alignList = [
+  { id: 'left', name: '居左' },
+  { id: 'center', name: '居中' },
+  { id: 'right', name: '居右' },
+]
+
+export const zoomList = [
+  { id: 'fixWidth', name: '宽度固定，高度自适应' },
+  { id: 'fixHeight', name: '高度固定，宽度自适应' },
+]

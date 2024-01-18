@@ -1,15 +1,18 @@
-// 1: 单行文本  6: 多行文本    4: 复选框   3: 填写日期   7: 选择框
+// 1: 单行文本  6: 多行文本    4: 复选框   3: 填写日期   7: 选择框  8: 图片
 export const MaterialTypeMap = {
   SINGLE_LINE: 1,
   MORE_LINE: 6,
   CHECKBOX: 4,
   DATE: 3,
-  SELECT: 7
+  SELECT: 7,
+  IMAGE: 8
 }
-type MaterialType = 1 | 6 | 4 | 3 | 7;
+type MaterialType = 1 | 6 | 4 | 3 | 7 | 8;
 
 
 type TimeFormatType = 'DD/MM/YYYY' | 'DD' | 'MM' | 'YYYY';
+type AlignType = 'center' | 'left' | 'right';
+type ZoomType = 'fixWidth' | 'fixHeight';
 
 export interface OptionItem {
   id: number;
@@ -22,6 +25,7 @@ export interface ComponentItem {
   y: number;
   type: MaterialType;
   value: any;
+  disabled: boolean;
   width: number;
   height: number;
   resizing?: Boolean;
@@ -31,6 +35,8 @@ export interface ComponentItem {
   fontSize?: number;
   letterSpace?: number;
   lineHeight?: number;
+  align?: AlignType;
+  zoom?: ZoomType;
   timeFormatType?: TimeFormatType;
   options?: OptionItem[];
 }

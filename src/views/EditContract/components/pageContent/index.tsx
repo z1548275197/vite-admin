@@ -11,22 +11,27 @@ const cx = classNames.bind(classes);
 const componentMap: any = {
   [MaterialTypeMap.SINGLE_LINE]: {
     value: '',
+    disabled: false,
     width: 150,
     height: 24,
     placeholderTxt: 'Please Input',
     componentName: '內容 Input',
-    relationKey: ''
+    relationKey: '',
+    align: 'left'
   },
   [MaterialTypeMap.MORE_LINE]: {
     value: '',
+    disabled: false,
     width: 150,
     height: 60,
     placeholderTxt: 'Please Input',
     componentName: '內容 Input',
-    relationKey: ''
+    relationKey: '',
+    align: 'left'
   },
   [MaterialTypeMap.CHECKBOX]: {
     value: 'false',
+    disabled: false,
     width: 24,
     height: 24,
     componentName: '選項框 Checkbox',
@@ -34,21 +39,35 @@ const componentMap: any = {
   },
   [MaterialTypeMap.DATE]: {
     value: '',
+    disabled: false,
     width: 150,
     height: 24,
     placeholderTxt: 'Date',
     timeFormatType: 'DD/MM/YYYY',
     componentName: '日期 Date',
-    relationKey: ''
+    relationKey: '',
+    align: 'left'
   },
   [MaterialTypeMap.SELECT]: {
     value: '',
+    disabled: false,
     width: 150,
     height: 24,
     placeholderTxt: 'Please Select',
     componentName: '選項 Option',
     relationKey: '',
-    options: []
+    options: [],
+    align: 'left'
+  },
+  [MaterialTypeMap.IMAGE]: {
+    value: '',
+    disabled: false,
+    width: 200,
+    height: 100,
+    componentName: '圖片 Image',
+    relationKey: '',
+    align: 'left',
+    zoom: 'fixHeight'
   },
 }
 
@@ -368,6 +387,14 @@ export default defineComponent({
           <div class={cx('singleLine')}>{item.value || item.placeholderTxt}</div>
         )
       }
+      if (item.type === MaterialTypeMap.IMAGE) {
+        return (
+          <img class={cx('placeImg', {
+            fixHeight: item.zoom === 'fixHeight',
+            fixWidth: item.zoom === 'fixWidth'
+          })} src="https://fr-static.jiazhengye.cn/default.c9688b76d9a82f0b.png" alt="" />
+        )
+      }
     }
 
     return () => {
@@ -393,6 +420,7 @@ export default defineComponent({
                   color: item.value ? '#000' : '#bebebe',
                   fontSize: `${item.fontSize || 14}px`,
                   letterSpacing: item.letterSpace + 'px',
+                  textAlign: item.align || 'left',
                   opacity: state.victuryItem && state.victuryItem.id === item.id ? 0 : 1
                 }}
                 draggable
@@ -512,7 +540,8 @@ export default defineComponent({
                   height: state.victuryItem.height + 'px',
                   color: state.victuryItem.value ? '#000' : '#bebebe',
                   fontSize: `${state.victuryItem.fontSize || 14}px`,
-                  letterSpacing: state.victuryItem.letterSpace + 'px'
+                  letterSpacing: state.victuryItem.letterSpace + 'px',
+                  textAlign: state.victuryItem.align || 'left',
                 }}
               >
                 {renderComponent(state.victuryItem)}
