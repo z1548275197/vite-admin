@@ -197,7 +197,7 @@ export default defineComponent({
           {
             [
               MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.CHECKBOX,
-              MaterialTypeMap.DATE, MaterialTypeMap.SELECT
+              MaterialTypeMap.DATE, MaterialTypeMap.SELECT, MaterialTypeMap.IMAGE
             ].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>是否可编辑:</div>

@@ -61,7 +61,7 @@ const componentMap: any = {
   },
   [MaterialTypeMap.IMAGE]: {
     value: '',
-    disabled: false,
+    disabled: true,
     width: 200,
     height: 100,
     componentName: '圖片 Image',
