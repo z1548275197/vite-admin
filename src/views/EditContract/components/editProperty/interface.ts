@@ -24,3 +24,8 @@ export const zoomList = [
   { id: 'fixWidth', name: '宽度固定，高度自适应' },
   { id: 'fixHeight', name: '高度固定，宽度自适应' },
 ]
+
+export const fontWeightList = [
+  { id: 'normal', name: '正常' },
+  { id: 'bold', name: '加粗' },
+]

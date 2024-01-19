@@ -4,7 +4,7 @@ import classes from './index.module.scss';
 import classNames from 'classnames/bind';
 import { ComponentItem, MaterialTypeMap } from '@/store/types/contract';
 import { ArrowRightBold } from '@element-plus/icons-vue';
-import { fontSizeList, letterSpaceList, timeFormatList, lineHeightList, alignList, zoomList } from './interface';
+import { fontSizeList, letterSpaceList, timeFormatList, lineHeightList, alignList, zoomList, fontWeightList } from './interface';
 
 const cx = classNames.bind(classes);
 
@@ -205,7 +205,6 @@ export default defineComponent({
                   <el-select
                     size="small"
                     style={{ width: '80%' }}
-                    clearable
                     modelValue={currentComponent.value.disabled}
                     placeholder="是否可编辑"
                     onChange={(val: any) => {
@@ -246,7 +245,6 @@ export default defineComponent({
                   <el-select
                     size="small"
                     style={{ width: '80%' }}
-                    clearable
                     modelValue={currentComponent.value.fontSize || 14}
                     placeholder="请选择字号"
                     onChange={(val: any) => {
@@ -269,12 +267,38 @@ export default defineComponent({
           {
             [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE, MaterialTypeMap.SELECT].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
+                <div class={cx('propertyName')}>字体粗细:</div>
+                <div class={cx('propertyValue')}>
+                  <el-select
+                    size="small"
+                    style={{ width: '80%' }}
+                    modelValue={currentComponent.value.fontWeight || 'normal'}
+                    placeholder="请选择字体粗细"
+                    onChange={(val: any) => {
+                      changePropertyHandle('fontWeight', val)
+                    }}
+                  >
+                    {
+                      fontWeightList.map((item: any) => {
+                        return (
+                          <el-option key={item.id} label={item.name} value={item.id}></el-option>
+                        )
+                      })
+                    }
+                  </el-select>
+                </div>
+              </div>
+            )
+          }
+
+          {
+            [MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE, MaterialTypeMap.SELECT].includes(currentComponent.value.type) && (
+              <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>横向间距:</div>
                 <div class={cx('propertyValue')}>
                   <el-select
                     size="small"
                     style={{ width: '80%' }}
-                    clearable
                     modelValue={currentComponent.value.letterSpace}
                     placeholder="请选择横向间距"
                     onChange={(val: any) => {
@@ -302,7 +326,6 @@ export default defineComponent({
                   <el-select
                     size="small"
                     style={{ width: '80%' }}
-                    clearable
                     modelValue={currentComponent.value.lineHeight || 1.2}
                     placeholder="请选择行高"
                     onChange={(val: any) => {
@@ -333,7 +356,6 @@ export default defineComponent({
                   <el-select
                     size="small"
                     style={{ width: '80%' }}
-                    clearable
                     modelValue={currentComponent.value.align || 'left'}
                     placeholder="请选择对齐方式"
                     onChange={(val: any) => {

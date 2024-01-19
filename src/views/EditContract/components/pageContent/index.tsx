@@ -419,6 +419,7 @@ export default defineComponent({
                   height: item.height + 'px',
                   color: item.value ? '#000' : '#bebebe',
                   fontSize: `${item.fontSize || 14}px`,
+                  fontWeight: item.fontWeight || 'normal',
                   letterSpacing: item.letterSpace + 'px',
                   textAlign: item.align || 'left',
                   opacity: state.victuryItem && state.victuryItem.id === item.id ? 0 : 1

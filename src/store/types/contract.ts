@@ -13,6 +13,7 @@ type MaterialType = 1 | 6 | 4 | 3 | 7 | 8;
 type TimeFormatType = 'DD/MM/YYYY' | 'DD' | 'MM' | 'YYYY';
 type AlignType = 'center' | 'left' | 'right';
 type ZoomType = 'fixWidth' | 'fixHeight';
+type FontWeightType = 'normal' | 'bold';
 
 export interface OptionItem {
   id: number;
@@ -33,6 +34,7 @@ export interface ComponentItem {
   placeholderTxt?: string;
   relationKey?: string;
   fontSize?: number;
+  fontWeight?: FontWeightType;
   letterSpace?: number;
   lineHeight?: number;
   align?: AlignType;
