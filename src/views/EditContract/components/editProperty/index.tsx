@@ -38,7 +38,8 @@ export default defineComponent({
         'DD/MM/YYYY': 'Date',
         'DD': 'Day',
         'MM': 'Month',
-        'YYYY': 'Year'
+        'YYYY': 'Year',
+        'MM/DD/YYYY': 'Date'
       }
       return dateMap[type]
     }
