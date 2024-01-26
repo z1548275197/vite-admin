@@ -15,6 +15,7 @@ export default defineComponent({
       isShow: false,
       currentKey: '',
       currentKeyFullName: '',
+      currentOptions: [],
     })
     const currentComponent: ComputedRef<ComponentItem | null> = computed(() => {
       return store.getters.currentComponent;
@@ -93,6 +94,7 @@ export default defineComponent({
                                       if (!keyItem.component_type.includes(currentComponent.value?.type)) return;
                                       state.currentKey = keyItem.relationKey;
                                       state.currentKeyFullName = keyItem.full_name;
+                                      state.currentOptions = keyItem.relationValue;
                                     }}
                                   >{keyItem.name}</div>
                                 )
@@ -254,9 +256,9 @@ export default defineComponent({
                     }}
                   >
                     {
-                      fontSizeList.map((item: any) => {
+                      state.currentOptions.map((item: any) => {
                         return (
-                          <el-option key={item} label={item + 'px'} value={item}></el-option>
+                          <el-option key={item.id} label={item.name} value={item.id}></el-option>
                         )
                       })
                     }
