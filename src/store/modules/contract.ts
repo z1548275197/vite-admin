@@ -44,7 +44,12 @@ const state: State = {
       name: '图片',
       icon: 'https://fr-static.jiazhengye.cn/image.8ea0e1074ab6f6a2.png'
     },
-  ],         // 素材工具栏列表
+    {
+      type: 9,
+      name: '删除线',
+      icon: 'https://fr-static.jiazhengye.cn/delete.b37010505b630265.png'
+    },
+  ],    // 素材工具栏列表
   currentPageIndex: 0,      // 当前选择的页面索引
   currentComponentIndex: -1, // 当前选择的组件索引
   specification: '1', // 纸张规格

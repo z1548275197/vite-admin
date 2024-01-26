@@ -222,7 +222,7 @@ export default defineComponent({
           {
             [
               MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE,
-              MaterialTypeMap.SELECT, MaterialTypeMap.IMAGE
+              MaterialTypeMap.SELECT, MaterialTypeMap.IMAGE, MaterialTypeMap.CHECKBOX
             ].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>关联字段:</div>
@@ -232,6 +232,35 @@ export default defineComponent({
                   }}>
                     {currentKeyName.value}
                   </el-button>
+                </div>
+              </div>
+            )
+          }
+
+          {
+            [
+              MaterialTypeMap.CHECKBOX
+            ].includes(currentComponent.value.type) && (
+              <div class={cx('propertyItem')}>
+                <div class={cx('propertyName')}>关联字段值:</div>
+                <div class={cx('propertyValue')}>
+                  <el-select
+                    size="small"
+                    style={{ width: '80%' }}
+                    modelValue={currentComponent.value.relationValue}
+                    placeholder="请选择字段值"
+                    onChange={(val: any) => {
+                      changePropertyHandle('relationValue', val)
+                    }}
+                  >
+                    {
+                      fontSizeList.map((item: any) => {
+                        return (
+                          <el-option key={item} label={item + 'px'} value={item}></el-option>
+                        )
+                      })
+                    }
+                  </el-select>
                 </div>
               </div>
             )

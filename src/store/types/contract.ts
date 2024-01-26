@@ -1,13 +1,15 @@
-// 1: 单行文本  6: 多行文本    4: 复选框   3: 填写日期   7: 选择框  8: 图片
+// 1: 单行文本  6: 多行文本    4: 复选框   3: 填写日期   7: 选择框  8: 图片 
+// 9: 删除线
 export const MaterialTypeMap = {
   SINGLE_LINE: 1,
   MORE_LINE: 6,
   CHECKBOX: 4,
   DATE: 3,
   SELECT: 7,
-  IMAGE: 8
+  IMAGE: 8,
+  DELETE_LINE: 9
 }
-type MaterialType = 1 | 6 | 4 | 3 | 7 | 8;
+type MaterialType = 1 | 6 | 4 | 3 | 7 | 8 | 9;
 
 
 type TimeFormatType = 'DD/MM/YYYY' | 'DD' | 'MM' | 'YYYY';
@@ -33,6 +35,7 @@ export interface ComponentItem {
   componentName?: string;
   placeholderTxt?: string;
   relationKey?: string;
+  relationValue?: string;
   fontSize?: number;
   fontWeight?: FontWeightType;
   letterSpace?: number;
