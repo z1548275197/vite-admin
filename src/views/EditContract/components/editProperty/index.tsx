@@ -199,7 +199,7 @@ export default defineComponent({
           {
             [
               MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.CHECKBOX,
-              MaterialTypeMap.DATE, MaterialTypeMap.SELECT, MaterialTypeMap.IMAGE
+              MaterialTypeMap.DATE, MaterialTypeMap.SELECT, MaterialTypeMap.IMAGE, MaterialTypeMap.DELETE_LINE
             ].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>是否可编辑:</div>
@@ -224,7 +224,7 @@ export default defineComponent({
           {
             [
               MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE,
-              MaterialTypeMap.SELECT, MaterialTypeMap.IMAGE, MaterialTypeMap.CHECKBOX
+              MaterialTypeMap.SELECT, MaterialTypeMap.IMAGE, MaterialTypeMap.CHECKBOX, MaterialTypeMap.DELETE_LINE
             ].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>关联字段:</div>
@@ -241,7 +241,7 @@ export default defineComponent({
 
           {
             [
-              MaterialTypeMap.CHECKBOX
+              MaterialTypeMap.CHECKBOX, MaterialTypeMap.DELETE_LINE
             ].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>关联字段值:</div>
