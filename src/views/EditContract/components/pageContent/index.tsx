@@ -407,7 +407,11 @@ export default defineComponent({
       if (item.type === MaterialTypeMap.DELETE_LINE) {
         return (
           <div class={cx('deleteLine')}>
-            <div class={cx('deleteContent')}></div>
+            <div class={cx('deleteContent')} style={{
+              fontSize: item.height / 2 + 'px'
+            }}>
+              XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            </div>
           </div>
         )
       }
