@@ -35,7 +35,8 @@ const componentMap: any = {
     width: 24,
     height: 24,
     componentName: '選項框 Checkbox',
-    relationKey: ''
+    relationKey: '',
+    relationValue: ''
   },
   [MaterialTypeMap.DATE]: {
     value: '',
@@ -68,6 +69,14 @@ const componentMap: any = {
     relationKey: '',
     align: 'left',
     zoom: 'fixHeight'
+  },
+  [MaterialTypeMap.DELETE_LINE]: {
+    value: '',
+    disabled: false,
+    width: 150,
+    height: 24,
+    componentName: '刪除線 strikethrough',
+    relationKey: '',
   },
 }
 
@@ -228,7 +237,7 @@ export default defineComponent({
       if (direction === 'leftTop') {
         const tempWidth = tempComponent.x - mousemoveX + tempComponent.width;
         const tempHeight = tempComponent.y - mousemoveY + tempComponent.height;
-        if ((tempWidth < 20) || (tempHeight < 20)) {
+        if ((tempWidth < 15) || (tempHeight < 15)) {
           return
         } else {
           store.dispatch('EDIT_COMPONENT', {
@@ -246,7 +255,7 @@ export default defineComponent({
       } else if (direction === 'leftBottom') {
         const tempWidth = tempComponent.x - mousemoveX + tempComponent.width;
         const tempHeight = mousemoveY - tempComponent.y;
-        if ((tempWidth < 20) || (tempHeight < 20)) {
+        if ((tempWidth < 15) || (tempHeight < 15)) {
           return
         } else {
           store.dispatch('EDIT_COMPONENT', {
@@ -263,7 +272,7 @@ export default defineComponent({
       } else if (direction === 'rightBottom') {
         const tempWidth = mousemoveX - tempComponent.x;
         const tempHeight = mousemoveY - tempComponent.y;
-        if ((tempWidth < 20) || (tempHeight < 20)) {
+        if ((tempWidth < 15) || (tempHeight < 15)) {
           return
         } else {
           store.dispatch('EDIT_COMPONENT', {
@@ -278,7 +287,7 @@ export default defineComponent({
         }
       } else if (direction === 'left') {
         const tempWidth = tempComponent.x - mousemoveX + tempComponent.width;
-        if (tempWidth < 20) {
+        if (tempWidth < 15) {
           return;
         } else {
           store.dispatch('EDIT_COMPONENT', {
@@ -293,7 +302,7 @@ export default defineComponent({
         }
       } else if (direction === 'right') {
         const tempWidth = mousemoveX - tempComponent.x;
-        if (tempWidth < 20) {
+        if (tempWidth < 15) {
           return
         } else {
           store.dispatch('EDIT_COMPONENT', {
@@ -307,7 +316,7 @@ export default defineComponent({
         }
       } else if (direction === 'top') {
         const tempHeight = tempComponent.y - mousemoveY + tempComponent.height;
-        if (tempHeight < 20) {
+        if (tempHeight < 15) {
           return;
         } else {
           store.dispatch('EDIT_COMPONENT', {
@@ -322,7 +331,7 @@ export default defineComponent({
         }
       } else if (direction === 'bottom') {
         const tempHeight = mousemoveY - tempComponent.y;
-        if (tempHeight < 20) {
+        if (tempHeight < 15) {
           return;
         } else {
           store.dispatch('EDIT_COMPONENT', {
@@ -374,7 +383,7 @@ export default defineComponent({
 
       if (item.type === MaterialTypeMap.CHECKBOX) {
         return (
-          <el-checkbox style={{ marginLeft: '4px', marginTop: '4px' }} model-value={item.value}></el-checkbox>
+          <div class={cx('checkBox')}></div>
         )
       }
       if (item.type === MaterialTypeMap.DATE) {
@@ -393,6 +402,17 @@ export default defineComponent({
             fixHeight: item.zoom === 'fixHeight',
             fixWidth: item.zoom === 'fixWidth'
           })} src="https://fr-static.jiazhengye.cn/default.c9688b76d9a82f0b.png" alt="" />
+        )
+      }
+      if (item.type === MaterialTypeMap.DELETE_LINE) {
+        return (
+          <div class={cx('deleteLine')}>
+            <div class={cx('deleteContent')} style={{
+              fontSize: item.height / 2 + 'px'
+            }}>
+              XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            </div>
+          </div>
         )
       }
     }

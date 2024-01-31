@@ -15,6 +15,7 @@ export default defineComponent({
       isShow: false,
       currentKey: '',
       currentKeyFullName: '',
+      currentOptions: [],
     })
     const currentComponent: ComputedRef<ComponentItem | null> = computed(() => {
       return store.getters.currentComponent;
@@ -94,6 +95,7 @@ export default defineComponent({
                                       if (!keyItem.component_type.includes(currentComponent.value?.type)) return;
                                       state.currentKey = keyItem.relationKey;
                                       state.currentKeyFullName = keyItem.full_name;
+                                      state.currentOptions = keyItem.relationValue;
                                     }}
                                   >{keyItem.name}</div>
                                 )
@@ -198,7 +200,7 @@ export default defineComponent({
           {
             [
               MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.CHECKBOX,
-              MaterialTypeMap.DATE, MaterialTypeMap.SELECT, MaterialTypeMap.IMAGE
+              MaterialTypeMap.DATE, MaterialTypeMap.SELECT, MaterialTypeMap.IMAGE, MaterialTypeMap.DELETE_LINE
             ].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>是否可编辑:</div>
@@ -223,7 +225,7 @@ export default defineComponent({
           {
             [
               MaterialTypeMap.SINGLE_LINE, MaterialTypeMap.MORE_LINE, MaterialTypeMap.DATE,
-              MaterialTypeMap.SELECT, MaterialTypeMap.IMAGE
+              MaterialTypeMap.SELECT, MaterialTypeMap.IMAGE, MaterialTypeMap.CHECKBOX, MaterialTypeMap.DELETE_LINE
             ].includes(currentComponent.value.type) && (
               <div class={cx('propertyItem')}>
                 <div class={cx('propertyName')}>关联字段:</div>
@@ -233,6 +235,35 @@ export default defineComponent({
                   }}>
                     {currentKeyName.value}
                   </el-button>
+                </div>
+              </div>
+            )
+          }
+
+          {
+            [
+              MaterialTypeMap.CHECKBOX, MaterialTypeMap.DELETE_LINE
+            ].includes(currentComponent.value.type) && (
+              <div class={cx('propertyItem')}>
+                <div class={cx('propertyName')}>关联字段值:</div>
+                <div class={cx('propertyValue')}>
+                  <el-select
+                    size="small"
+                    style={{ width: '80%' }}
+                    modelValue={currentComponent.value.relationValue}
+                    placeholder="请选择字段值"
+                    onChange={(val: any) => {
+                      changePropertyHandle('relationValue', val)
+                    }}
+                  >
+                    {
+                      state.currentOptions.map((item: any) => {
+                        return (
+                          <el-option key={item.id} label={item.name} value={item.id}></el-option>
+                        )
+                      })
+                    }
+                  </el-select>
                 </div>
               </div>
             )
