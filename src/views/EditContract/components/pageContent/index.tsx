@@ -36,7 +36,8 @@ const componentMap: any = {
     height: 24,
     componentName: '選項框 Checkbox',
     relationKey: '',
-    relationValue: ''
+    relationValue: '',
+    relationValueOptions: [],
   },
   [MaterialTypeMap.DATE]: {
     value: '',
@@ -77,6 +78,8 @@ const componentMap: any = {
     height: 24,
     componentName: '刪除線 strikethrough',
     relationKey: '',
+    relationValue: '',
+    relationValueOptions: [],
   },
 }
 

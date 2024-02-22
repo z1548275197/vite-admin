@@ -36,6 +36,7 @@ export interface ComponentItem {
   placeholderTxt?: string;
   relationKey?: string;
   relationValue?: string;
+  relationValueOptions?: any[];
   fontSize?: number;
   fontWeight?: FontWeightType;
   letterSpace?: number;

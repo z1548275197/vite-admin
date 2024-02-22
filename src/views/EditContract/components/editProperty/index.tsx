@@ -92,6 +92,7 @@ export default defineComponent({
                                     })}
                                     key={keyItem.relationKey}
                                     onClick={() => {
+                                      console.log(keyItem.relationValue)
                                       if (!keyItem.component_type.includes(currentComponent.value?.type)) return;
                                       state.currentKey = keyItem.relationKey;
                                       state.currentKeyFullName = keyItem.full_name;
@@ -121,6 +122,8 @@ export default defineComponent({
                     state.isShow = false;
                     state.currentKey = currentComponent.value?.relationKey || '';
                     changePropertyHandle('componentName', state.currentKeyFullName);
+                    changePropertyHandle('relationValueOptions', state.currentOptions);
+
                   }}>
                     确认
                   </el-button>
@@ -257,7 +260,7 @@ export default defineComponent({
                     }}
                   >
                     {
-                      state.currentOptions.map((item: any) => {
+                      (currentComponent.value.relationValueOptions || []).map((item: any) => {
                         return (
                           <el-option key={item.id} label={item.name} value={item.id}></el-option>
                         )
