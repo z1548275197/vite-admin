@@ -10,6 +10,7 @@ export const routes: Array<RouteRecordRaw> = [
       keepAlive: false
     },
     component: Layout,
+    redirect: '/test1',
     children: [
       {
         path: '/test1',
@@ -47,7 +48,7 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/:pathMatch(.*)',
-    redirect: '/',
+    redirect: '/404',
   },
 ]
 

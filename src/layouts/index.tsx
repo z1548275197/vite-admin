@@ -1,23 +1,26 @@
-import { defineComponent, reactive, onMounted } from 'vue'
+import { defineComponent, reactive, onMounted, ComputedRef, computed } from 'vue'
 import classes from './index.module.scss'
 import { getAuthMenu } from '@/apis/user';
 import TopNav from './components/TopNav';
 import LeftNav from './components/LeftNav';
 import classNames from 'classnames/bind';
+import { useStore } from 'vuex';
+import { useElementPlusTheme } from "use-element-plus-theme"
 
 const cx = classNames.bind(classes);
 
 export default defineComponent({
   name: 'layout',
   setup() {
-
-    const state: any = reactive({
-      menuList: [],
+    const store = useStore();
+    const currentThemeColor: ComputedRef<string> = computed(() => {
+      return store.state.user.themeColor
     });
+    useElementPlusTheme(currentThemeColor.value);
+
+
 
     const getMenuList = async () => {
-      console.log('触发内容')
-      state.menuList = []
       // const res = await getAuthMenu();
       // if (res) {
       //   console.log(res, '菜单')
@@ -37,7 +40,7 @@ export default defineComponent({
           </el-header>
           <el-container class={cx('leftContent')}>
             <el-aside width="300px">
-              <LeftNav menuList={state.menuList} />
+              {/* <LeftNav menuList={state.menuList} /> */}
             </el-aside>
             <el-main class={cx('centerContent')}>
               <router-view />

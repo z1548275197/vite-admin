@@ -10,6 +10,7 @@ export default defineComponent({
       return (
         <div class={cx('container')}>
           测试内容元件
+          <el-button type="primary">测试内容</el-button>
         </div>
       )
     }

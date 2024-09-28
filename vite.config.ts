@@ -5,10 +5,6 @@ import path, { resolve } from 'path';
 import { fileURLToPath } from 'url'
 import viteCompression from 'vite-plugin-compression';
 
-// 全局 scss 文件的路径
-// 用 normalizePath 解决 window 下的路径问题
-const variablePath = normalizePath(path.resolve('./src/styles/variable.scss'));
-
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -38,12 +34,4 @@ export default defineConfig({
       },
     },
   },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "${variablePath}";`
-      }
-    },
-  },
-  
 })

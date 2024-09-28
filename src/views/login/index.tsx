@@ -3,14 +3,15 @@ import { useRouter } from 'vue-router';
 import classes from './index.module.scss'
 import { ElMessage } from 'element-plus';
 import { login } from '@/apis/user';
+import { useStore } from 'vuex';
 import Cookies from 'js-cookie';
 
 export default defineComponent({
   name: "Login",
   setup() {
-
-    const ruleFormRef: any = ref()
+    const ruleFormRef: any = ref();
     const router = useRouter();
+    const store = useStore();
     const state: any = reactive({
       loginForm: {
         mobile: '',
@@ -30,9 +31,13 @@ export default defineComponent({
         ruleFormRef.value.validate(async (valid: any) => {
           if (valid) {
             const res: any = await login(state.loginForm)
-            console.log(res, '我的数据')
             if (res) {
+              // TODO 需要更改登录
               Cookies.set('token', 'aaaaaaaa');
+              // 获取主题色更改
+              store.dispatch('CHANGE_THEME_COLOR', {
+                themeColor: 'red'
+              });
               router.push('/');
             }
           } else {
