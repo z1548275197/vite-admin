@@ -5,30 +5,22 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    redirect: '/contract',
+    redirect: '/test',
     meta: {
       title: '首页',
       keepAlive: false
     },
     component: Layout,
     children: [
+      {
+        path: '/test',
+        name: 'test',
+        component: () => import('@/views/test'),
+        meta: {
+          title: '',
+        },
+      },
     ]
-  }, 
-  {
-    path: '/contract',
-    name: 'Contract',
-    component: () => import('@/views/contract'),
-    meta: {
-      title: '',
-    },
   },
-  {
-    path: '/editContract',
-    name: 'EditContract',
-    component: () => import('@/views/EditContract'),
-    meta: {
-      title: '自定义合约',
-    },
-  }
 ]
 
