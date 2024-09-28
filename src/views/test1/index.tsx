@@ -1,7 +1,8 @@
 import { defineComponent, onMounted, reactive, ref } from 'vue'
 import classes from './index.module.scss'
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(classes);
 
 export default defineComponent({
   setup() {
@@ -11,7 +12,7 @@ export default defineComponent({
 
     return () => {
       return (
-        <div>
+        <div class={cx('container')}>
           这是我的内容111
         </div>
       )

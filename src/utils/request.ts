@@ -21,7 +21,7 @@ axiosReq.interceptors.request.use(
       headers: {
         ...headers,
         'Content-Type': 'application/x-www-form-urlencoded',
-        'token': Cookies.get('PHPSESSID') || ''
+        'token': Cookies.get('token') || ''
       },
     };
     config.data = qs.stringify(data);

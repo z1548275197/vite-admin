@@ -1,45 +1,15 @@
 .container {
   height: 100vh;
+
   .topContent {
-    height: 60px;
     background: skyblue;
   }
+
   .leftContent {
-    width: 300px;
     background: #ccc;
-    height: calc(100vh - 60px);
-    float: left;
   }
+
   .centerContent {
-    height: calc(100vh - 60px);
-    margin-left: 300px;
-  }
-}
-
-
-
-@media screen and (max-width: 960px) {
- 
-}
-
-@media screen and (max-width: 768px) {
-  .container {
-    .leftContent {
-      display: none;
-    }
-    .centerContent {
-      margin-left: 0;
-    }
-  }
-}
-
-@media screen and (max-width: 550px) {
-  .container {
-    .leftContent {
-      display: none;
-    }
-    .centerContent {
-      margin-left: 0;
-    }
+    // margin-left: 300px;
   }
 }
