@@ -7,3 +7,4 @@ declare module 'vue3-print-nb'
 declare module '*.js';
 declare module 'lodash';
 declare module 'js-cookie';
+declare module 'nprogress';

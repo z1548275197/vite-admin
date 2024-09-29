@@ -12,20 +12,16 @@ const cx = classNames.bind(classes);
 export default defineComponent({
   name: 'layout',
   setup() {
-    const store = useStore();
-    const currentThemeColor: ComputedRef<string> = computed(() => {
-      return store.state.user.themeColor
-    });
-    useElementPlusTheme(currentThemeColor.value);
+    // const store = useStore();
+    // const currentThemeColor: ComputedRef<string> = computed(() => {
+    //   return store.state.user.themeColor
+    // });
+    // useElementPlusTheme(currentThemeColor.value);
 
 
 
     const getMenuList = async () => {
-      // const res = await getAuthMenu();
-      // if (res) {
-      //   console.log(res, '菜单')
-      //   state.menuList = res
-      // }
+
     }
 
     onMounted(() => {
