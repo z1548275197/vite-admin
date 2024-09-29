@@ -2,7 +2,6 @@
   "name": "hk-mis",
   "private": true,
   "version": "0.0.8",
-  "type": "module",
   "scripts": {
     "dev": "vite --mode dev",
     "dev:test": "vite --mode test",
@@ -14,9 +13,13 @@
     "lint": "npm run eslint:fix && npm run stylelint:fix",
     "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint-fix": "eslint --fix --ext .js --ext .vue src/",
+    "checkMasterUpdate": "node ./prebuild/checkmaster.js",
+    "checkTag": "node ./prebuild/checkTag.js",
     "newbranch": "f2e git newbranch"
   },
   "dependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "@element-plus/icons-vue": "^0.2.7",
     "@vitejs/plugin-vue-jsx": "^2.0.0",
     "axios": "^0.21.1",
@@ -47,5 +50,17 @@
     "vite-plugin-compression": "^0.3.3",
     "vite-plugin-hot-export": "^0.5.2",
     "vue-tsc": "^0.38.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "npm run checkMasterUpdate && npm run checkTag"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,vue}": [
+      "npm run lint"
+    ]
   }
 }
